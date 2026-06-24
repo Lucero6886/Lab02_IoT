@@ -6,13 +6,13 @@
     <title>Lab 2: Điện tử Nền tảng - Button, LED, DHT11 & LCD I2C</title>
     <style>
         :root {
-            --primary: #1e3d59;
+            --primary: #0f3d6b; /* Xanh Phenikaa */
             --secondary: #ff6e40;
-            --bg-body: #f5f7fa;
+            --bg-body: #f4f6f9;
             --bg-card: #ffffff;
-            --text-main: #333333;
-            --text-light: #666666;
-            --border: #e1e4e8;
+            --text-main: #2c3e50;
+            --text-light: #596a7b;
+            --border: #dce1e6;
             --note-bg: #e1f5fe;
             --note-border: #03a9f4;
             --warning-bg: #fff3e0;
@@ -42,8 +42,22 @@
             margin: 0 auto;
             background: var(--bg-card);
             padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .uni-title {
+            font-size: 1.1em;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            font-weight: 600;
         }
 
         h1, h2, h3, h4 {
@@ -53,50 +67,56 @@
 
         h1 {
             font-size: 2.2em;
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 10px;
-            margin-top: 0;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 15px;
+            margin-top: 10px;
         }
 
         h2 {
-            font-size: 1.5em;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 5px;
+            font-size: 1.6em;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 8px;
             margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .meta-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), #1a5c9e);
             color: white;
             padding: 20px;
-            border-radius: 6px;
+            border-radius: 8px;
             margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .meta-item strong {
             display: block;
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: #bbdefb;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin-bottom: 5px;
         }
 
         .section-card {
             background: #fff;
             border: 1px solid var(--border);
             border-left: 5px solid var(--primary);
-            padding: 20px;
+            padding: 25px;
             margin-bottom: 20px;
-            border-radius: 4px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
         }
 
         .callout {
             padding: 15px 20px;
             margin: 20px 0;
-            border-radius: 4px;
+            border-radius: 6px;
             border-left: 5px solid;
         }
 
@@ -109,127 +129,220 @@
         .callout-title {
             font-weight: bold;
             margin-bottom: 8px;
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             text-transform: uppercase;
-            font-size: 0.9em;
+            font-size: 0.95em;
         }
-
-        .note-box .callout-title { color: #0277bd; }
-        .warning-box .callout-title { color: #e65100; }
-        .mentor-box .callout-title { color: #6a1b9a; }
-        .student-box .callout-title { color: #2e7d32; }
-        .danger-box .callout-title { color: #c62828; }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
             font-size: 0.95em;
+            background: white;
         }
 
         th, td {
             border: 1px solid var(--border);
-            padding: 12px 15px;
+            padding: 15px;
             text-align: left;
         }
 
         th {
-            background-color: #f1f3f5;
+            background-color: #f8f9fa;
             color: var(--primary);
-            font-weight: bold;
+            font-weight: 600;
         }
 
         pre {
-            background: #2d2d2d;
-            color: #ccc;
-            padding: 15px;
-            border-radius: 6px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
             overflow-x: auto;
             font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 0.9em;
+            font-size: 0.95em;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
         }
 
         code {
             font-family: 'Consolas', 'Courier New', monospace;
             background: #f1f3f5;
             color: #d63384;
-            padding: 2px 5px;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .placeholder {
+            color: #ff5252;
+            font-weight: bold;
+            background: rgba(255, 82, 82, 0.1);
+            padding: 2px 4px;
             border-radius: 3px;
         }
 
-        .placeholder {
-            color: var(--placeholder-color);
-            font-weight: bold;
-        }
-
-        pre code {
-            background: none;
-            color: inherit;
-            padding: 0;
-        }
+        pre code { background: none; color: inherit; padding: 0; }
 
         kbd {
             background-color: var(--keyboard-bg);
             border: 1px solid var(--keyboard-border);
-            border-radius: 3px;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            box-shadow: 0 2px 0 rgba(0,0,0,0.2);
             color: #333;
             display: inline-block;
             font-family: sans-serif;
             font-size: 0.85em;
             font-weight: 700;
-            line-height: 1;
-            padding: 2px 5px;
-            white-space: nowrap;
+            padding: 3px 8px;
+            margin: 0 2px;
         }
-
-        ul, ol { padding-left: 25px; }
-        li { margin-bottom: 8px; }
 
         .toc {
             background: #f8f9fa;
             border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: 6px;
+            padding: 25px;
+            border-radius: 8px;
             margin-bottom: 30px;
         }
-        .toc ul { list-style-type: none; padding-left: 0; }
-        .toc li { margin-bottom: 5px; }
-        .toc a { color: var(--primary); text-decoration: none; }
-        .toc a:hover { text-decoration: underline; }
+        .toc strong { font-size: 1.2em; color: var(--primary); display: block; margin-bottom: 15px; }
+        .toc ul { list-style-type: none; padding-left: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
+        .toc li::before { content: "🔹"; margin-right: 8px; font-size: 0.8em; }
+        .toc a { color: var(--text-main); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        .toc a:hover { color: var(--primary); text-decoration: underline; }
 
         .step-number {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background: var(--primary);
             color: white;
-            width: 24px;
-            height: 24px;
-            text-align: center;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            line-height: 24px;
             margin-right: 10px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        /* --- STYLES CHO SƠ ĐỒ KHỐI (DIAGRAMS) --- */
+        .diagram-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: #f8fcfd;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px dashed var(--note-border);
+            margin: 20px 0;
+        }
+
+        .diagram-box {
+            background: white;
+            border: 2px solid var(--primary);
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--primary);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            min-width: 140px;
+            flex: 1;
+        }
+
+        .diagram-box span {
+            display: block;
+            font-size: 0.8em;
+            color: var(--text-light);
+            font-weight: normal;
+            margin-top: 8px;
+            border-top: 1px solid #eee;
+            padding-top: 8px;
+        }
+
+        .diagram-arrow {
+            color: var(--secondary);
+            font-size: 24px;
             font-weight: bold;
         }
 
-        .checklist-item {
-            display: flex;
-            align-items: flex-start;
+        /* --- STYLES CHO GIAO DIỆN TƯƠNG TÁC (DETAILS/SUMMARY) --- */
+        details.interactive-qa {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
             margin-bottom: 10px;
+            overflow: hidden;
         }
-        .checklist-item input[type="checkbox"] {
-            margin-top: 5px;
-            margin-right: 10px;
-            transform: scale(1.2);
+
+        details.interactive-qa summary {
+            background: #f1f5f9;
+            padding: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        details.interactive-qa summary::-webkit-details-marker { display: none; }
+        details.interactive-qa summary::after {
+            content: "▼";
+            color: var(--primary);
+            font-size: 0.8em;
+            transition: transform 0.3s ease;
+        }
+        details.interactive-qa[open] summary::after { transform: rotate(180deg); }
         
-        .hl-yellow { background-color: rgba(255, 235, 59, 0.3); padding: 2px; }
+        .qa-hint {
+            padding: 15px;
+            background: #fff;
+            border-top: 1px solid var(--border);
+            color: var(--text-light);
+            font-size: 0.95em;
+        }
+
+        /* --- FOOTER BẢN QUYỀN --- */
+        .footer {
+            margin-top: 50px;
+            padding: 30px;
+            text-align: center;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            font-size: 0.95em;
+            line-height: 1.8;
+        }
+        .footer p { margin: 5px 0; }
+        .footer .highlight { color: #ffeb3b; font-weight: bold; }
+        
+        .hl-yellow { background-color: rgba(255, 235, 59, 0.4); padding: 2px 4px; border-radius: 3px;}
+        .mapping-badge { background: var(--primary); color: white; padding: 4px 8px; border-radius: 4px; font-family: monospace; font-size: 0.9em; margin: 0 2px;}
+
+        .inline-arrow {
+            color: var(--secondary);
+            font-weight: bold;
+            display: inline-block;
+            margin: 0 5px;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <!-- 1. HEADER TÀI LIỆU -->
-    <h1>TÀI LIỆU HƯỚNG DẪN THỰC HÀNH MENTOR-GUIDED</h1>
+    <div class="header-section">
+        <div class="uni-title">Trường Kỹ Thuật Phenikaa - Đại Học Phenikaa</div>
+        <div class="uni-title" style="font-size: 0.9em; color: var(--secondary);">Khoa Điện - Điện Tử</div>
+        <h1>TÀI LIỆU HƯỚNG DẪN THỰC HÀNH MENTOR-GUIDED</h1>
+    </div>
+
     <div class="meta-grid">
         <div class="meta-item">
             <strong>Tên bài Lab</strong>
@@ -241,7 +354,7 @@
         </div>
         <div class="meta-item">
             <strong>Nhóm kỹ năng chính</strong>
-            Breadboard Wiring, Digital I/O, I2C Protocol, Debouncing, Exception Handling
+            Breadboard, Pull-down/up, Debounce, I2C Protocol, Exception Handling
         </div>
         <div class="meta-item">
             <strong>Mức độ / Vị trí</strong>
@@ -249,126 +362,175 @@
         </div>
     </div>
 
-    <!-- MỤC LỤC -->
+    <!-- MỤC LỤC TƯƠNG TÁC -->
     <div class="toc">
-        <strong>Mục Lục Nhanh:</strong>
+        <strong>📑 Nội dung bài học (Mục lục nhanh):</strong>
         <ul>
             <li><a href="#tong-quan">2. Tổng quan Lab</a></li>
-            <li><a href="#ban-chat">3. Bản chất của bài Lab: Phần cứng không biết nói dối!</a></li>
+            <li><a href="#ban-chat">3. Bản chất Học thuật: Phần cứng & Logic</a></li>
             <li><a href="#muc-tieu">4. Mục tiêu giảng dạy / học tập</a></li>
-            <li><a href="#kien-thuc">5. Kiến thức nền sinh viên cần có</a></li>
+            <li><a href="#kien-thuc">5. Kiến thức nền & Bảng Mapping GPIO</a></li>
             <li><a href="#chuan-bi">6. Chuẩn bị trước giờ Lab</a></li>
-            <li><a href="#phan-tich-ht">7. Phân tích Kiến trúc Hệ thống & Luồng dữ liệu</a></li>
-            <li><a href="#ket-noi">8. Phân tích Sơ đồ phần cứng (Bảo vệ Cháy Nổ)</a></li>
+            <li><a href="#phan-tich-ht">7. Sơ đồ Kiến trúc & Luồng dữ liệu</a></li>
+            <li><a href="#ket-noi">8. Sơ đồ Đấu nối (Bảo vệ Cháy nổ)</a></li>
             <li><a href="#tham-so">9. Các tham số Cần Cá nhân hóa</a></li>
-            <li><a href="#quy-trinh">10. Quy trình Thực hành Từng bước (Module hóa)</a></li>
-            <li><a href="#hoi-dap">11. ⚠️ BẮT BUỘC: VƯỢT ẢI CÂU HỎI TRƯỚC KHI XEM CODE</a></li>
-            <li><a href="#canh-bao-code">12. CHỐNG HỌC VẸT: Bẫy Copy Code Mù Quáng</a></li>
-            <li><a href="#phan-tich-code">13. Phân tích Mã nguồn Chuẩn học thuật (Fail-safe Code)</a></li>
+            <li><a href="#quy-trinh">10. Quy trình Thực hành Từng bước</a></li>
+            <li><a href="#hoi-dap">11. ⚠️ Trạm Kiểm Tra Kiến Thức (Q&A)</a></li>
+            <li><a href="#canh-bao-code">12. Chống học vẹt & Cảnh báo Logic</a></li>
+            <li><a href="#phan-tich-code">13. Phân tích Mã nguồn (Fail-safe Code)</a></li>
             <li><a href="#checklist">14. Checklist Nghiệm thu Mạch Điện</a></li>
             <li><a href="#debug">15. Debug và Xử lý sự cố Phần cứng</a></li>
             <li><a href="#danh-gia">16. Tự đánh giá & Mini Task Mở rộng</a></li>
-            <li><a href="#mentor">17. Ghi chú Mentoring cho Giảng viên</a></li>
+            <li><a href="#mentor">17. Lời nhắn nhủ từ Mentor trước giờ thực chiến</a></li>
         </ul>
     </div>
 
     <!-- 2. TỔNG QUAN LAB -->
-    <h2 id="tong-quan">2. Tổng quan Lab</h2>
+    <h2 id="tong-quan">🔍 2. Tổng quan Lab</h2>
     <div class="section-card">
         <p><strong>Tên chuẩn hóa:</strong> Đấu nối Mạch vật lý và Lập trình Giao tiếp với Cảm biến & Cơ cấu chấp hành cơ bản trên Breadboard.</p>
-        <p><strong>Chủ đề kỹ thuật chính:</strong> Phân tích tín hiệu Digital (Nút nhấn), Điều khiển Digital (LED rời), Thu thập dữ liệu môi trường (Cảm biến nhiệt ẩm DHT11), Hiển thị thông tin cục bộ (Màn hình LCD qua chuẩn I2C), Kỹ thuật Điện trở kéo (Pull-down) và Khử rung phím (Debounce) bằng phần mềm.</p>
+        <p><strong>Chủ đề kỹ thuật chính:</strong> Phân tích tín hiệu Digital (Nút nhấn), Điều khiển Digital (LED rời), Thu thập dữ liệu môi trường (Cảm biến nhiệt ẩm DHT11), Hiển thị thông tin cục bộ (Màn hình LCD qua chuẩn I2C), Kỹ thuật Điện trở kéo (Pull-down/Pull-up) và Khử rung phím (Debounce) bằng phần mềm.</p>
         <p><strong>Vị trí trong hệ thống:</strong> <strong>Tầng 2 (Lớp Giao tiếp phần cứng cơ bản)</strong>.</p>
         <ul>
-            <li><strong>Tính kế thừa:</strong> Kế thừa kỹ năng vận hành IDE, Cổng COM và nạp code từ Lab 1. Tuy nhiên, ở Lab này, chúng ta <strong>tạm gác mạng WiFi/Cloud sang một bên</strong> để đối mặt trực tiếp với các định luật Vật lý và Điện tử.</li>
-            <li><strong>Chuẩn bị cho tương lai:</strong> Một hệ thống IoT sẽ vô nghĩa nếu không có dữ liệu. Dữ liệu từ cảm biến DHT11 thu thập chuẩn xác ở Lab này sẽ là "Hàng hóa" (Telemetry Data) cực kỳ quan trọng để bạn bơm lên Đám mây (Blynk, MQTT, Firebase) ở các Lab 3, 4, 7 sau này.</li>
+            <li><strong>Tính kế thừa:</strong> Kế thừa kỹ năng vận hành IDE, Quản lý Cổng COM và nạp code từ Lab 1. Ở bài này, chúng ta <strong>tạm gác mạng WiFi/Cloud sang một bên</strong> để làm chủ hoàn toàn các tín hiệu Điện tử và Vật lý.</li>
+            <li><strong>Chuẩn bị cho tương lai:</strong> Một hệ thống IoT sẽ vô nghĩa nếu thiếu dữ liệu đầu vào. Việc đọc dữ liệu chuẩn xác từ DHT11 và xử lý dứt khoát tín hiệu Nút nhấn ở Lab này sẽ là tiền đề tạo ra "Dữ liệu đo lường" (Telemetry Data) để đẩy lên Đám mây ở các Lab tiếp theo.</li>
         </ul>
     </div>
 
     <!-- 3. BẢN CHẤT CỦA BÀI LAB -->
-    <h2 id="ban-chat">3. Bản chất Học thuật: Điện tử gặp gỡ Lập trình</h2>
+    <h2 id="ban-chat">💡 3. Bản chất Học thuật: Điện tử gặp gỡ Lập trình</h2>
     <div class="note-box callout">
-        <span class="callout-title">Code sai có thể xóa viết lại, Cắm sai sẽ BỐC KHÓI!</span>
-        <p>Trọng tâm của Lab 2 <strong>KHÔNG PHẢI là thao tác gõ mã nguồn</strong>, mà là thao tác <strong>KẾT NỐI VẬT LÝ</strong> và xây dựng <strong>TƯ DUY LOGIC TRẠNG THÁI</strong>. Bạn đang phải giải quyết 3 vấn đề rất "cơ học" của thế giới thực:</p>
+        <span class="callout-title">Code sai có thể xóa sửa, Cắm sai mạch sẽ bốc khói!</span>
+        <p>Trọng tâm của Lab 2 <strong>KHÔNG PHẢI là thao tác gõ mã nguồn</strong>, mà là thao tác <strong>KẾT NỐI VẬT LÝ</strong> và xây dựng <strong>TƯ DUY LOGIC TRẠNG THÁI</strong>. Bạn phải giải quyết 3 bài toán của thế giới thực:</p>
         <ol>
-            <li><strong>Sự mơ hồ của Điện áp (Floating State):</strong> Nút nhấn cơ học bản chất chỉ là 2 miếng kim loại chạm nhau. Khi bạn nhả tay ra, mạch điện bị hở, chân vi điều khiển biến thành một cái ăng-ten thu nhiễu sóng radio từ môi trường và nhảy số loạn xạ (0-1-0-1). Làm sao để ghim nó về mức 0V một cách kiên cố khi không ai bấm? Đó là bài toán của <em>Điện trở kéo (Pull-down Resistor)</em>.</li>
-            <li><strong>Lò xo cơ học và Hiện tượng Dội phím (Bouncing):</strong> Khi bạn bấm nút 1 cái, lò xo bên trong nảy lên nảy xuống ở mức độ vi mô, khiến vi điều khiển (với tốc độ hàng triệu vòng/giây) lầm tưởng bạn vừa bấm 100 lần. Làm sao để lọc bỏ tiếng ồn cơ học này? Đó là bài toán của <em>Khử rung phím (Debounce) bằng độ trễ phần mềm</em>.</li>
-            <li><strong>Đa ngôn ngữ Giao tiếp (Protocols):</strong> Mạch ESP8266 phải nói chuyện với 3 thiết bị bằng 3 ngôn ngữ khác biệt hoàn toàn: Nói với LED bằng điện áp 3.3V thuần túy (Đóng/Cắt), nói với DHT11 bằng chuỗi xung thời gian (1-Wire Protocol), và nói với Màn hình LCD bằng địa chỉ ô nhớ mạng (I2C Protocol).</li>
+            <li><strong>Sự mơ hồ của Điện áp (Floating State):</strong> Khi nhả nút bấm, chân tín hiệu bị hở mạch, biến thành "ăng-ten" thu nhiễu sóng từ môi trường khiến vi điều khiển đọc loạn xạ (0-1-0-1). Giải pháp là dùng <em>Điện trở kéo (Pull-up / Pull-down)</em> để ghim mức điện áp cố định khi không ai tác động.</li>
+            <li><strong>Lò xo cơ học và Hiện tượng Dội phím (Bouncing):</strong> Bấm nút 1 lần, các lá đồng bên trong nảy vi mô hàng chục lần, vi xử lý tốc độ cao sẽ tưởng bạn bấm 100 lần. Ta phải dùng thuật toán phần mềm để <em>Khử rung phím (Debounce)</em>.</li>
+            <li><strong>Đa ngôn ngữ Giao tiếp (Protocols):</strong> ESP8266 phải "nói chuyện" với LED bằng điện áp thuần túy (Mức Logic), với DHT11 bằng chuỗi xung thời gian (1-Wire), và với LCD bằng địa chỉ mạng (I2C Protocol).</li>
         </ol>
     </div>
 
     <!-- 4. MỤC TIÊU GIẢNG DẠY / HỌC TẬP -->
-    <h2 id="muc-tieu">4. Mục tiêu giảng dạy / học tập</h2>
+    <h2 id="muc-tieu">🎯 4. Mục tiêu học tập</h2>
     <div class="section-card">
-        <p>Sau khi hoàn thành Lab 2, sinh viên phải <strong>CHỨNG MINH ĐƯỢC</strong> các năng lực:</p>
+        <p>Sau khi hoàn thành Lab 2, sinh viên cần <strong>CHỨNG MINH ĐƯỢC</strong> các năng lực:</p>
         <ol>
-            <li><strong>Thao tác chuẩn xác</strong> trên Breadboard: Nối nguồn chung, mass chung, quy hoạch đường dây gọn gàng, tuyệt đối tránh rủi ro ngắn mạch (Short Circuit).</li>
-            <li><strong>Phân biệt rạch ròi</strong> giữa ký hiệu chân in trên vỏ mạch (VD: D1, D2) và Mã số GPIO thực tế bắt buộc dùng trong trình biên dịch C++ (VD: GPIO5, GPIO4).</li>
-            <li><strong>Thiết lập và Bảo vệ</strong> mạch điện: Tính toán dùng điện trở 220Ω để cản dòng chống cháy LED, dùng điện trở 10kΩ để ghim mức logic an toàn cho nút nhấn.</li>
-            <li><strong>Định tuyến thiết bị I2C:</strong> Sử dụng công cụ I2C Scanner để tự động quét và thu thập địa chỉ Hex (Address) của màn hình thay vì gõ bừa.</li>
-            <li><strong>Xử lý ngoại lệ (Exception Handling):</strong> Bẫy và xử lý êm đẹp lỗi <code>NaN</code> kinh điển khi cảm biến DHT11 bị mất kết nối hoặc bị ép đọc quá nhanh.</li>
+            <li><strong>Thao tác chuẩn xác trên Breadboard:</strong> Phân phối Nguồn/Mass (VCC/GND) hợp lý, tuyệt đối tránh rủi ro đoản mạch (Short Circuit).</li>
+            <li><strong>Chuyển đổi GPIO:</strong> Hiểu rõ sự khác biệt giữa ký hiệu in trên board (D1, D2) và số hiệu GPIO thực tế trong code (GPIO5, GPIO4).</li>
+            <li><strong>Tính toán linh kiện bảo vệ:</strong> Sử dụng điện trở cản dòng (220Ω) cho LED và điện trở kéo (10kΩ) bảo vệ mức logic cho nút nhấn.</li>
+            <li><strong>Định tuyến thiết bị I2C:</strong> Sử dụng công cụ I2C Scanner để tự động quét và thu thập địa chỉ Hex (Address) của màn hình thay vì đoán mò.</li>
+            <li><strong>Xử lý ngoại lệ (Exception Handling):</strong> Bẫy thành công lỗi <code>NaN</code> khi cảm biến DHT11 bị lỏng dây hoặc bị ép đọc quá tốc độ giới hạn.</li>
         </ol>
     </div>
 
-    <!-- 5. KIẾN THỨC NỀN SINH VIÊN CẦN CÓ -->
-    <h2 id="kien-thuc">5. Kiến thức nền sinh viên cần hiểu rõ</h2>
+    <!-- 5. KIẾN THỨC NỀN & MAPPING -->
+    <h2 id="kien-thuc">📚 5. Kiến thức nền & Bảng Mapping GPIO</h2>
     <div class="section-card">
+        <h4 style="margin-top: 0; color: #d32f2f;">BẢNG TRA CỨU NHANH (MAPPING BẮT BUỘC NHỚ)</h4>
+        <p>Vi điều khiển ESP8266 hiểu ngôn ngữ "GPIO", không hiểu các chữ "D1, D2" in trên vỏ mạch NodeMCU. Mọi câu lệnh gọi hàm trong C++ đều phải dùng số GPIO thực tế.</p>
+        <table style="margin-bottom: 25px;">
+            <tr>
+                <th width="30%">Ký hiệu trên Board</th>
+                <th width="30%">Mã GPIO (Viết trong C++)</th>
+                <th width="40%">Chức năng mặc định trong Lab 2</th>
+            </tr>
+            <tr>
+                <td><strong>D5</strong></td>
+                <td><span class="mapping-badge">14</span></td>
+                <td>Tín hiệu dữ liệu (DATA) cho <strong>DHT11</strong></td>
+            </tr>
+            <tr>
+                <td><strong>D1</strong></td>
+                <td><span class="mapping-badge">5</span></td>
+                <td>Xung đồng bộ (SCL) cho <strong>Màn hình LCD I2C</strong></td>
+            </tr>
+            <tr>
+                <td><strong>D2</strong></td>
+                <td><span class="mapping-badge">4</span></td>
+                <td>Dữ liệu (SDA) cho <strong>Màn hình LCD I2C</strong></td>
+            </tr>
+            <tr>
+                <td><strong>D6</strong></td>
+                <td><span class="mapping-badge">12</span></td>
+                <td>Xuất tín hiệu Output bật tắt <strong>Đèn LED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>D7</strong></td>
+                <td><span class="mapping-badge">13</span></td>
+                <td>Đọc tín hiệu Input từ <strong>Nút Nhấn</strong></td>
+            </tr>
+        </table>
+
+        <h4>Kiến thức Nền tảng</h4>
         <ul>
-            <li><strong>NodeMCU Pinout (Ánh xạ Chân):</strong> Vi điều khiển bên trong ESP8266 chỉ hiểu ngôn ngữ "GPIO". Khi nhà sản xuất in chữ <code>D6</code> lên bo mạch, nó tương ứng với <code>GPIO12</code>. Nếu bạn cắm dây vật lý vào D6 nhưng trong code bạn viết <code>int ledPin = 6;</code>, mạch sẽ câm điếc hoàn toàn. <strong>Quy tắc kỹ sư: Luôn mở hình ảnh bảng NodeMCU Pinout kế bên khi lập trình!</strong></li>
-            <li><strong>Chuẩn giao tiếp I2C:</strong> Đây là một mạng lưới siêu gọn nhẹ, chỉ cần 2 dây: <strong>SDA</strong> (Serial Data - Truyền dữ liệu) và <strong>SCL</strong> (Serial Clock - Đồng bộ nhịp xung). Bạn có thể nối song song hàng chục thiết bị I2C (Cảm biến ánh sáng, gia tốc kế, màn hình...) vào chung 2 dây này. Vi điều khiển sẽ đóng vai trò "Lớp trưởng", gọi đúng tên "Địa chỉ Hex" (Ví dụ: <code>0x27</code> hoặc <code>0x3F</code>) thì thiết bị mang ID đó mới được phép lên tiếng trả lời.</li>
-            <li><strong>Căn bệnh NaN (Not a Number):</strong> Là kết quả báo lỗi của hàm C++ khi nó yêu cầu cảm biến DHT11 trả về nhiệt độ nhưng cảm biến im lặng (do lỏng dây data, hoặc do bị hàm loop() ép đọc quá nhanh liên tục khiến chip cảm biến bị treo). Trong toán học máy tính, NaN không thể mang đi cộng trừ nhân chia. Nếu đem biến `NaN` in thẳng ra LCD, hệ thống sẽ hiển thị rác hoặc lỗi bộ nhớ.</li>
+            <li><strong>Chuẩn giao tiếp I2C:</strong> Một mạng lưới nội bộ thu nhỏ, chỉ dùng 2 dây: <strong>SDA</strong> (Serial Data) và <strong>SCL</strong> (Serial Clock). Vi điều khiển (Master) sẽ giao tiếp với các thiết bị (Slave) thông qua "Địa chỉ Hex" (Ví dụ: <code>0x27</code>, <code>0x3F</code>). Nối sai dây SDA/SCL, mạng sẽ sập toàn bộ.</li>
+            <li><strong>Sự khác biệt phiên bản DHT11:</strong> Module DHT11 (loại 3 chân hàn sẵn trên mạch nhỏ) thường đã được nhà sản xuất gắn sẵn điện trở kéo lên bên trong. Nếu dùng cảm biến DHT11 trần (loại 4 chân), sinh viên <strong>bắt buộc phải tự cắm thêm một điện trở 10kΩ</strong> nối giữa chân VCC và chân DATA để đảm bảo giao tiếp ổn định.</li>
+            <li><strong>Căn bệnh NaN (Not a Number):</strong> Là kết quả báo lỗi của thư viện C++ khi đọc DHT11 thất bại. Có thể do đứt dây tín hiệu, hoặc do hàm <code>loop()</code> chạy quá nhanh (DHT11 chỉ cho phép lấy mẫu 2 giây/lần). Đem <code>NaN</code> in ra màn hình LCD sẽ gây lỗi hiển thị ký tự rác.</li>
         </ul>
     </div>
 
     <!-- 6. CHUẨN BỊ TRƯỚC GIỜ LAB -->
-    <h2 id="chuan-bi">6. Chuẩn bị trước giờ Lab</h2>
+    <h2 id="chuan-bi">🛠 6. Chuẩn bị trước giờ Lab</h2>
     <table>
         <tr>
             <th>Hạng mục</th>
-            <th>Chi tiết yêu cầu & Cảnh báo</th>
+            <th>Chi tiết yêu cầu & Lưu ý</th>
         </tr>
         <tr>
-            <td><strong>Phần cứng Thiết bị</strong></td>
+            <td><strong>Phần cứng</strong></td>
             <td>
-                - 1 x NodeMCU ESP8266 & Cáp USB truyền data.<br>
-                - 1 x Breadboard (Bo cắm thử).<br>
-                - 1 x Nút nhấn cơ học (Push button 4 chân) + 1 x Điện trở 10kΩ (Vạch màu: Nâu-Đen-Cam).<br>
+                - 1 x Board NodeMCU ESP8266 & Cáp USB truyền Data.<br>
+                - 1 x Breadboard (Bo mạch cắm thử).<br>
+                - 1 x Nút nhấn (Push button) + 1 x Điện trở 10kΩ (Vạch màu: Nâu-Đen-Cam).<br>
                 - 1 x Đèn LED 5mm rời + 1 x Điện trở 220Ω (Vạch màu: Đỏ-Đỏ-Nâu).<br>
-                - 1 x Cảm biến DHT11 (Lưu ý: Nếu là loại module 3 chân thì đã tích hợp trở. Nếu là loại 4 chân trần, cần tự cắm thêm trở 10k kéo từ chân Data lên VCC).<br>
-                - 1 x Màn hình LCD 1602 kèm module I2C hàn sẵn dưới lưng.<br>
-                - Bó dây cắm Jumper (Đực-Đực, Đực-Cái).
+                - 1 x Cảm biến DHT11 (Có sẵn trở kéo trên mạch module).<br>
+                - 1 x Màn hình LCD 1602 kèm module I2C hàn sẵn.<br>
+                - Bộ cáp Jumper (Đực-Đực, Đực-Cái).
             </td>
         </tr>
         <tr>
-            <td><strong>Môi trường Thư viện</strong></td>
-            <td>Mở Arduino IDE, vào Menu <em>Sketch > Include Library > Manage Libraries</em>, gõ tìm và cài đặt:<br>
-                1. <code>DHT sensor library</code> (Tác giả: <strong>Adafruit</strong>). <span class="hl-yellow">Cực kỳ lưu ý: Phải chọn nút "Install All" nếu IDE hỏi có muốn cài đặt các gói phụ thuộc (Dependencies như Adafruit Unified Sensor) hay không.</span><br>
-                2. <code>LiquidCrystal I2C</code> (Tác giả: <strong>Frank de Brabander</strong> hoặc Marco Schwartz).
+            <td><strong>Môi trường (IDE)</strong></td>
+            <td>Mở Arduino IDE, vào Menu <em>Sketch > Include Library > Manage Libraries</em>, cài đặt:<br>
+                1. <code>DHT sensor library</code> (Tác giả: <strong>Adafruit</strong>). <span class="hl-yellow">Lưu ý: Bấm "Install All" để cài kèm bộ Dependency "Adafruit Unified Sensor" bắt buộc.</span><br>
+                2. <code>LiquidCrystal I2C</code> (Tác giả: <strong>Frank de Brabander / Marco Schwartz</strong>).
             </td>
         </tr>
     </table>
 
     <!-- 7. PHÂN TÍCH HỆ THỐNG -->
-    <h2 id="phan-tich-ht">7. Phân tích Kiến trúc Hệ thống & Luồng Dữ liệu</h2>
+    <h2 id="phan-tich-ht">🏗 7. Sơ đồ Kiến trúc & Luồng Dữ liệu</h2>
     <div class="section-card">
-        <p>Hệ thống Lab 2 được chia làm 2 mô-đun phần cứng độc lập, sau đó mới tích hợp lại bằng phần mềm C++:</p>
+        <p>Hệ thống Lab 2 gồm 2 mô-đun phần cứng riêng biệt. Hãy nghiệm thu từng luồng một.</p>
         
-        <h4>Mô-đun 1: Xử lý Tín hiệu Số (Digital Input/Output Logic)</h4>
-        <pre>
-[Ngón tay bấm Nút] --(Đóng mạch 3.3V)--> [Chân Input D7] --(Code C++ bẫy sườn & Toggle cờ)--> [MCU ESP8266] --(Xuất áp 3.3V)--> [Chân Output D6] --> [LED Sáng]
-        </pre>
+        <h4>Mô-đun 1: Xử lý Tín hiệu Số (Digital I/O & Logic)</h4>
+        <div class="diagram-container">
+            <div class="diagram-box">🔘 Nút Nhấn <span>Đóng mạch (3.3V) +<br>Mạch Pull-down (10kΩ)</span></div>
+            <div class="diagram-arrow">➔</div>
+            <div class="diagram-box">📥 D7 (GPIO13) <span>Bắt sườn tín hiệu &<br>Khử rung (Debounce)</span></div>
+            <div class="diagram-arrow">➔</div>
+            <div class="diagram-box">📤 D6 (GPIO12) <span>Lật trạng thái cờ<br>Xuất áp 3.3V</span></div>
+            <div class="diagram-arrow">➔</div>
+            <div class="diagram-box">💡 LED Rời <span>Sáng/Tắt<br>(Có trở cản dòng 220Ω)</span></div>
+        </div>
         
-        <h4>Mô-đun 2: Thu thập & Hiển thị Dữ liệu Môi trường (Protocols)</h4>
-        <pre>
-[Nhiệt độ môi trường] --> [Sensor DHT11] --(Chuỗi bit 1-Wire)--> [Chân Input D5] --> [MCU dịch mã ra số thực] --(Giao thức I2C qua D1, D2)--> [LCD 1602 vẽ ký tự]
-        </pre>
-        <p><strong>Nguyên lý Tối thượng: GND CHUNG (Common Ground).</strong> Toàn bộ các module cắm trên Breadboard, cho dù tiêu thụ điện áp 3.3V hay 5V, đều PHẢI nối chung vào một đường GND (Mass âm). Nếu mạch bị lệch Mass, tín hiệu điện áp sẽ không có hệ quy chiếu chuẩn (0V), dẫn đến dữ liệu bị rác và mạch nhiễu điên cuồng.</p>
+        <h4>Mô-đun 2: Thu thập & Hiển thị Dữ liệu (Protocols)</h4>
+        <div class="diagram-container" style="background: #fff8f0; border-color: #ffcc80;">
+            <div class="diagram-box" style="border-color: #ff9800; color: #e65100;">🌡️ Môi Trường <span>Nhiệt độ & Độ ẩm</span></div>
+            <div class="diagram-arrow" style="color: #ff9800;">➔</div>
+            <div class="diagram-box" style="border-color: #ff9800; color: #e65100;">📡 DHT11 <span>Giao thức 1-Wire<br>qua D5 (GPIO14)</span></div>
+            <div class="diagram-arrow" style="color: #ff9800;">➔</div>
+            <div class="diagram-box" style="border-color: #ff9800; color: #e65100;">🧠 ESP8266 <span>Tính toán số liệu<br>Bẫy lỗi NaN</span></div>
+            <div class="diagram-arrow" style="color: #ff9800;">➔</div>
+            <div class="diagram-box" style="border-color: #ff9800; color: #e65100;">📺 LCD 1602 <span>Giao tiếp I2C qua<br>SCL (D1) / SDA (D2)</span></div>
+        </div>
+        
+        <p style="margin-top: 15px;"><strong>Nguyên lý Tối thượng: GND CHUNG (Common Ground).</strong> Toàn bộ các linh kiện, dù dùng nguồn 3.3V hay 5V, đều PHẢI nối thông với một rãnh GND chung. Lệch mass sẽ dẫn đến tín hiệu bị rác, điện áp trôi nổi.</p>
     </div>
 
     <!-- 8. SƠ ĐỒ KẾT NỐI -->
-    <h2 id="ket-noi">8. Phân tích Sơ đồ phần cứng (BẢO VỆ CHÁY NỔ)</h2>
+    <h2 id="ket-noi">⚡ 8. Sơ đồ Đấu nối (Bảo vệ Cháy nổ)</h2>
     <div class="warning-box callout">
-        <span class="callout-title">RÚT CÁP USB KHỎI MÁY TÍNH TRƯỚC KHI CẮM DÂY!</span>
-        <p>Hành vi cắm, rút, sửa dây trên Breadboard khi mạch đang có điện là hành vi của dân nghiệp dư. Nguy cơ vô tình quẹt chập dây Đỏ (VCC) đâm vào dây Đen (GND) sẽ gây đoản mạch, có thể làm chết IC nguồn trên Board hoặc tệ hơn là cháy cổng USB máy tính của bạn ngay lập tức.</p>
+        <span class="callout-title">RÚT CÁP USB TRƯỚC KHI CẮM/RÚT DÂY JUMPER!</span>
+        <p>Thao tác cắm rút linh kiện trên Breadboard khi mạch đang có điện cực kỳ rủi ro. Chỉ một sơ suất chạm dây Đỏ (VCC) vào dây Đen (GND) sẽ gây đoản mạch (Short Circuit), thiêu rụi chip Nguồn và hỏng cổng USB máy tính.</p>
     </div>
     
     <table>
@@ -376,45 +538,45 @@
             <th>Module</th>
             <th>Chân linh kiện</th>
             <th>Nối vào NodeMCU</th>
-            <th>Cảnh báo Kỹ thuật Sống còn</th>
+            <th>Lưu ý Kỹ thuật</th>
         </tr>
         <tr>
             <td rowspan="2"><strong>LED rời</strong></td>
             <td>Anode (Chân dài +)</td>
             <td>D6 (GPIO12)</td>
-            <td><strong>BẮT BUỘC</strong> phải mắc nối tiếp qua một điện trở 220Ω. Cắm trực tiếp chân LED vào D6 sẽ làm LED nổ cái đốp do quá dòng, hoặc thiêu rụi chân vi điều khiển.</td>
+            <td><strong>BẮT BUỘC</strong> mắc nối tiếp qua điện trở <strong>220Ω</strong>. Cắm trực tiếp chân LED vào D6 sẽ làm nổ LED hoặc cháy chân GPIO.</td>
         </tr>
         <tr>
             <td>Cathode (Chân ngắn -)</td>
             <td>GND</td>
-            <td>Cắm vào rãnh âm (đường sọc Xanh/Đen) trải dọc của Breadboard.</td>
+            <td>Cắm vào rãnh âm (đường Xanh/Đen) của Breadboard.</td>
         </tr>
         <tr>
-            <td rowspan="2"><strong>Nút nhấn (Button)</strong></td>
-            <td>Chân VCC</td>
+            <td rowspan="2"><strong>Nút nhấn</strong><br>(Mạch Pull-down)</td>
+            <td>Cạnh 1 (Cấp nguồn)</td>
             <td>3V3</td>
-            <td>Cấp nguồn điện dương chờ sẵn cho 1 bên hông của công tắc.</td>
+            <td>Đưa nguồn 3.3V chờ sẵn ở một bên công tắc.</td>
         </tr>
         <tr>
-            <td>Chân Tín hiệu</td>
-            <td>D7 (GPIO13) <br>+ Trở 10kΩ xuống GND</td>
-            <td><em>(Lưu ý: Lab gốc dùng D0, nhưng D0 trên ESP8266 liên quan đến hệ thống Deep Sleep, thiếu tính ổn định khi làm Input. Tài liệu này đã chuẩn hóa đổi sang D7).</em> <br>Nhánh tín hiệu này phải chẻ làm 2 ngả: Một đường chạy về D7. Một đường đâm qua Điện trở 10kΩ ghim thẳng xuống GND. Đây gọi là mạch <strong>Pull-down (Kéo xuống)</strong> vững chắc.</td>
+            <td>Cạnh 2 (Tín hiệu)</td>
+            <td>D7 (GPIO13) <br><strong>+ Kéo trở 10kΩ xuống GND</strong></td>
+            <td>Nhánh này tách làm đôi: Một dây chạy về D7 đọc tín hiệu. Một chân đâm qua điện trở <strong>10kΩ ghim chặt xuống GND</strong> (Tạo mạch Pull-down giữ áp 0V khi thả tay).</td>
         </tr>
         <tr>
             <td rowspan="3"><strong>DHT11</strong></td>
             <td>VCC (+)</td>
             <td>3V3</td>
-            <td>Nuôi nguồn cho vi mạch bên trong cảm biến hoạt động.</td>
+            <td>Nuôi nguồn cho cảm biến.</td>
         </tr>
         <tr>
             <td>GND (-)</td>
             <td>GND chung</td>
-            <td>Đồng bộ mức điện áp tham chiếu 0V.</td>
+            <td>Đồng bộ mức điện áp 0V.</td>
         </tr>
         <tr>
-            <td>Data (S / Out)</td>
+            <td>Data (OUT)</td>
             <td>D5 (GPIO14)</td>
-            <td>Đường truyền dữ liệu chậm (1-wire).</td>
+            <td>Truyền dữ liệu 1-Wire.</td>
         </tr>
         <tr>
             <td rowspan="4"><strong>LCD I2C</strong></td>
@@ -424,160 +586,181 @@
         </tr>
         <tr>
             <td>VCC</td>
-            <td><strong>VIN</strong> (Hoặc VU/5V)</td>
-            <td><strong>LỖI KINH ĐIỂN:</strong> Cắm vào lỗ 3.3V màn hình sẽ chỉ sáng mờ mờ hoặc đen thui. Màn hình LCD 1602 cần ăn điện 5V. Bạn phải cắm vào chân <code>VIN</code> (chân này lấy điện 5V bypass trực tiếp từ nguồn cáp USB).</td>
+            <td><strong>VIN</strong> (hoặc VU/5V)</td>
+            <td><strong>LỖI PHỔ BIẾN:</strong> Màn LCD 1602 cần điện 5V. Cắm lỗ 3.3V màn hình sẽ tối mờ. Cắm vào chân `VIN` để lấy điện 5V trực tiếp từ cáp USB.</td>
         </tr>
         <tr>
             <td>SDA</td>
             <td>D2 (GPIO4)</td>
-            <td>Đường Data I2C ngầm định của thiết kế phần cứng ESP8266.</td>
+            <td>Kênh dữ liệu chuẩn I2C.</td>
         </tr>
         <tr>
             <td>SCL</td>
             <td>D1 (GPIO5)</td>
-            <td>Đường Clock I2C ngầm định của thiết kế phần cứng ESP8266.</td>
+            <td>Kênh xung nhịp (Clock) chuẩn I2C.</td>
         </tr>
     </table>
 
     <!-- 9. THAM SỐ CÁ NHÂN HÓA -->
-    <h2 id="tham-so">9. Các tham số Cần Cá nhân hóa (Đừng Copy Mù Quáng)</h2>
+    <h2 id="tham-so">🔑 9. Các tham số Cần Cá nhân hóa (Không Copy Mù)</h2>
     <div class="danger-box callout">
-        <span class="callout-title">Hardware mỗi người mỗi khác!</span>
-        <p>Mã nguồn C++ sinh ra là để phục vụ cho Sơ đồ cắm dây của bạn, không phải ngược lại. Việc Copy Paste thiếu suy nghĩ sẽ đẻ ra hàng loạt lỗi logic.</p>
+        <span class="callout-title">Phần cứng của bạn có thể khác tài liệu!</span>
+        <p>Mã nguồn phải phục vụ cho sơ đồ đấu dây vật lý thực tế của bạn. Đừng bao giờ giữ nguyên các "Tham số mẫu" nếu bạn cắm dây ở vị trí khác.</p>
     </div>
     <ul>
-        <li><code>LiquidCrystal_I2C lcd(&lt;NHẬP_ĐỊA_CHỈ_I2C&gt;, 16, 2);</code>: Khai báo đối tượng màn hình. Con số địa chỉ I2C phổ biến nhất thường là <code>0x27</code>. Tuy nhiên, một số lô hàng LCD từ nhà sản xuất dùng chip PCF8574A sẽ có địa chỉ là <code>0x3F</code>. Nếu nạp code xong màn hình sáng đèn nhưng không lên chữ, bạn <strong>bắt buộc phải chạy đoạn code I2C Scanner</strong> để tìm ID đích thực của nó. <em>(Tài liệu PDF gốc ghi placeholder <code>0x00</code> là một cái bẫy khiến mạch chết cứng).</em></li>
-        <li><strong>Mapping Chân (Pin):</strong> Nếu tay bạn lỡ cắm cái đèn LED vào lỗ D1 trên mạch, bạn phải chủ động vào phần khai báo sửa code thành <code>int ledPin = 5;</code> (Vì D1 tương ứng GPIO5). Mọi sự lười biếng không tra bảng Pinout đều phải trả giá bằng việc code đúng nhưng đèn không sáng.</li>
+        <li><code>LiquidCrystal_I2C lcd(0x27, 16, 2);</code>: Con số <code>0x27</code> là địa chỉ I2C phổ biến. Tuy nhiên, nếu module lưng màn hình của bạn dùng chip PCF8574<strong>A</strong>, địa chỉ của nó sẽ là <code>0x3F</code>. <br><em>👉 Bắt buộc chạy Tool "I2C Scanner" (Giai đoạn 2) để tìm ID chính xác trước khi nạp code LCD.</em></li>
+        <li><strong>Định nghĩa Pin (GPIO):</strong> Code mẫu đang viết <code>#define DHTPIN 14</code> (tương ứng cắm D5). Nếu trên Breadboard bạn lỡ cắm qua D4, bạn phải chủ động sửa dòng code thành <code>#define DHTPIN 2</code>.</li>
     </ul>
 
     <!-- 10. QUY TRÌNH THỰC HÀNH TỪNG BƯỚC -->
-    <h2 id="quy-trinh">10. Quy trình Thực hành Từng bước (Phương pháp Phân rã Module)</h2>
+    <h2 id="quy-trinh">🚀 10. Quy trình Thực hành Từng bước</h2>
     <div class="mentor-box callout">
-        <span class="callout-title">Tư duy Kỹ sư: KHÔNG BAO GIỜ cắm mọi thứ cùng một lúc!</span>
-        <p>Lắp LED xong -> Test code LED. Cắm Nút nhấn -> Test code Nút. Cắm LCD -> Test chữ Hello World. Cắm DHT11 -> Test in ra Serial Monitor. Thành công hết các hàm lẻ tẻ mới gộp lại thành 1 file bự. Làm sai nguyên tắc Isolate (Cô lập và Bắt bệnh) này, khi toàn bộ mạch không chạy bạn sẽ không biết bắt đầu gỡ dây từ đâu.</p>
+        <span class="callout-title">Tư duy Kỹ sư: Phân rã Module (Isolation)</span>
+        <p>KHÔNG BAO GIỜ cắm mọi linh kiện cùng một lúc rồi nạp File Code khổng lồ! Hãy làm từng phần: Lắp Nút/LED -> Test Code bật đèn. Lắp LCD -> Test chữ Hello. Lắp DHT11 -> Test Data. Hoàn thiện từng cái mới gộp lại. Nếu làm sai nguyên tắc này, khi mạch xịt khói hoặc lỗi, bạn sẽ không biết gỡ rối từ đâu.</p>
     </div>
     
     <div class="section-card">
-        <h3><span class="step-number">1</span> Giai đoạn 1: Mạch Logic Bập bênh (Toggle Button & LED)</h3>
+        <h3><span class="step-number">1</span> Giai đoạn 1: Test Mạch Bập bênh (Button & LED)</h3>
         <ol>
-            <li>Rút cáp USB. Cắm LED, Nút nhấn và 2 con Điện trở (220Ω và 10kΩ) lên Breadboard theo Bảng sơ đồ Mục 8. Kéo nối dây VCC/GND từ NodeMCU sang cấp nguồn cho Breadboard.</li>
-            <li>Dùng mắt soi lại một lượt: Có cọng dây nguồn đỏ nào đang chập thẳng vào dây Mass đen không? Ổn thỏa thì cắm cáp USB vào máy tính.</li>
-            <li>Copy khối code <strong>Mô-đun 1</strong> (Ở phần 13 bên dưới), thay đổi thông số chân nếu cần, rồi nạp vào vi điều khiển.</li>
-            <li><strong>Nghiệm thu:</strong> Bấm ngón tay vào nút dứt khoát 1 cái rồi nhả ra -> LED bật sáng và giữ nguyên trạng thái. Bấm cái nữa -> LED tắt. (Bắt bệnh: Nếu đưa tay lại gần chưa chạm nút mà đèn đã tự chớp loạn xạ, bạn cắm lỏng điện trở 10k kéo Mass rồi).</li>
+            <li>Rút cáp USB. Cắm LED, Nút nhấn và 2 Điện trở (220Ω và 10kΩ) lên Breadboard. Đi dây VCC/GND.</li>
+            <li>Kiểm tra chéo: Không có cọng dây Đỏ nào chạm chập trực tiếp vào dây Đen. Đóng điện (Cắm cáp).</li>
+            <li>Nạp khối code <strong>Mô-đun 1</strong> (Bên dưới Phần 13). Chú ý điền đúng số GPIO.</li>
+            <li><strong>Nghiệm thu:</strong> Bấm dứt khoát 1 lần <span class="inline-arrow">➔</span> LED sáng tĩnh. Bấm lần nữa <span class="inline-arrow">➔</span> LED tắt. (Nếu chưa chạm tay mà đèn tự chớp loạn, điện trở 10kΩ Pull-down đang bị lỏng chân).</li>
         </ol>
 
-        <h3><span class="step-number">2</span> Giai đoạn 2: Khám phá Địa chỉ Mạng I2C (I2C Scanner)</h3>
+        <h3><span class="step-number">2</span> Giai đoạn 2: Quét địa chỉ Mạng I2C (I2C Scanner)</h3>
         <ol>
-            <li>Rút cáp USB. Nối 4 dây của màn hình LCD I2C vào mạch (VCC -> VIN, GND -> GND, SDA -> D2, SCL -> D1). Cắm cáp lại.</li>
-            <li>Mở IDE, vào Menu <em>File > Examples > Wire > i2c_scanner</em>. Nạp trực tiếp đoạn code có sẵn này vào mạch.</li>
-            <li>Mở <strong>Serial Monitor</strong> (Chỉnh Baudrate 9600 hoặc 115200 tùy yêu cầu của code). <strong>Lấy bút ghi lại con số định dạng Hex hiện ra</strong> (Ví dụ: <code>0x27</code> hoặc <code>0x3F</code>).</li>
+            <li>Rút cáp USB. Cắm 4 dây màn hình LCD vào mạch (VCC <span class="inline-arrow">➔</span> VIN, GND <span class="inline-arrow">➔</span> GND, SDA <span class="inline-arrow">➔</span> D2, SCL <span class="inline-arrow">➔</span> D1). Đóng điện.</li>
+            <li>Trong Arduino IDE, vào <em>File > Examples > Wire > i2c_scanner</em>. Nạp code này.</li>
+            <li>Mở <strong>Serial Monitor</strong> (Chỉnh tốc độ baud khớp với code). <strong>Ghi chép lại con số Hex hiện ra</strong> (Vd: <code>0x27</code> hoặc <code>0x3F</code>).</li>
         </ol>
 
         <h3><span class="step-number">3</span> Giai đoạn 3: Tích hợp Toàn Hệ thống</h3>
         <ol>
-            <li>Rút cáp USB. Cắm nốt cảm biến DHT11 vào chân D5. </li>
-            <li>Cắm điện. Copy khối code <strong>Mô-đun 2 (Tổng hợp)</strong> ở Phần 13 vào IDE.</li>
-            <li><strong>SỬA BẪY MÃ NGUỒN (Quan trọng):</strong> Đổi các đoạn có ngoặc nhọn `<...>` trong hàm khai báo chân cắm và hàm <code>LiquidCrystal_I2C</code> thành con số thực tế của bạn (Ví dụ: 0x27). Nếu quên sửa, IDE sẽ báo lỗi đỏ lòm khi Compile.</li>
-            <li>Nhấn Upload nạp code. </li>
-            <li><strong>Nghiệm thu:</strong> Màn hình LCD in ra "Nhiet do" và "Do am" kèm ký hiệu độ C (°) cực xịn. Thổi hơi nóng hoặc áp lòng bàn tay vào DHT11, chờ 2-4 giây để thấy số biến đổi tịnh tiến. Thử bấm Nút nhấn, đèn LED vẫn phải bật/tắt bình thường không bị đơ giật.</li>
+            <li>Rút cáp USB. Cắm cảm biến DHT11 (Chân tín hiệu vào D5). Đóng điện.</li>
+            <li>Copy khối code <strong>Mô-đun 2 (Tổng hợp)</strong> ở Phần 13 vào IDE mới.</li>
+            <li><strong><span style="color:red">SỬA BẪY MÃ NGUỒN:</span></strong> Thay thế toàn bộ các ngoặc nhọn <code>&lt;...&gt;</code> thành các con số GPIO và Địa chỉ I2C thực tế của bạn. Code sẽ lỗi đỏ nếu bạn quên bước này.</li>
+            <li>Nhấn Upload.</li>
+            <li><strong>Nghiệm thu:</strong> Màn LCD hiển thị "Nhiet do" và "Do am" cùng ký hiệu Độ C (°). Áp tay vào DHT11, số liệu thay đổi tịnh tiến sau mỗi 2 giây. Nút nhấn vẫn điều khiển bật/tắt đèn mượt mà.</li>
         </ol>
     </div>
 
     <!-- 11. HỎI ĐÁP TRƯỚC CODE -->
-    <h2 id="hoi-dap">11. ⚠️ BẮT BUỘC: VƯỢT ẢI CÂU HỎI TRƯỚC KHI XEM CODE</h2>
+    <h2 id="hoi-dap">⚠️ 11. Trạm Kiểm Tra Kiến Thức (Interactive Q&A)</h2>
     <div class="student-box callout">
-        <span class="callout-title">Tấm vé thông hành mở khóa Code C++:</span>
-        <p>Mentor/Giảng viên có quyền yêu cầu sinh viên gập máy tính lại và trả lời 6 câu hỏi này trước khi cho phép copy mã nguồn:</p>
-        <ol>
-            <li>Bạn cắm dây đèn LED vào lỗ in chữ <code>D6</code> trên mạch, nhưng trong code C++ lại bắt buộc phải khai báo <code>int ledPin = 12;</code>. Chữ số 12 này từ đâu chui ra? Bạn phải tra cứu sự ánh xạ này ở tài liệu nào?</li>
-            <li>Trong sơ đồ nút nhấn, con điện trở <code>10kΩ</code> (Vạch Nâu-Đen-Cam) đóng vai trò gì? Nếu bạn lười và rút nó ra vứt đi, vi điều khiển sẽ bị "ảo giác" như thế nào khi bạn chưa bấm nút?</li>
-            <li>Khi cấp nguồn cho màn LCD 1602, tài liệu bắt cắm dây VCC vào chân <code>VIN</code> thay vì <code>3.3V</code>. Tại sao thiết bị màn hình này lại "đòi hỏi" nguồn riêng như vậy? Chân VIN lấy điện áp từ đâu đẩy lên?</li>
-            <li>Giao tiếp I2C rất thông minh, chỉ tốn 2 dây tín hiệu SDA và SCL để nói chuyện với hàng chục thiết bị. Trên bo NodeMCU ESP8266, 2 dây này đã được nhà sản xuất "chốt" ngầm định sẵn vào 2 lỗ cắm vật lý nào?</li>
-            <li>Đoạn lệnh <code>if (isnan(t))</code> có mục đích gì trong kỹ thuật lập trình an toàn? Chữ <code>NaN</code> viết tắt của cụm từ gì, và hiện tượng vật lý tồi tệ nào đã gây ra lỗi này?</li>
-            <li>Nếu bạn là thợ code "gà mờ", bạn sẽ viết hàm bắt nút nhấn bằng 1 lệnh duy nhất <code>if (digitalRead(buttonPin) == HIGH) { bật_đèn }</code>. Tại sao tài liệu học thuật (phần 13) lại phải đẻ ra biến <code>oldSwitchState</code> lưu lại trạng thái quá khứ để làm gì cho phức tạp?</li>
-        </ol>
+        <span class="callout-title">Vé thông hành mở khóa Code C++: Sinh viên tự trả lời trước khi click xem gợi ý!</span>
+        
+        <details class="interactive-qa">
+            <summary>1. Bạn cắm LED vào lỗ D6, nhưng code bắt khai báo "int ledPin = 12". Số 12 này từ đâu ra?</summary>
+            <div class="qa-hint"><strong>💡 Gợi ý tư duy:</strong> Số 12 là mã chuẩn GPIO (General Purpose Input/Output) của lõi vi điều khiển ESP8266. "D6" chỉ là cái nhãn in lụa trên board NodeMCU để người dùng dễ nhìn. Trình biên dịch C++ chỉ làm việc với mã GPIO. Phải luôn tra cứu bảng NodeMCU Pinout.</div>
+        </details>
+
+        <details class="interactive-qa">
+            <summary>2. Điện trở 10kΩ trong mạch Nút nhấn đóng vai trò gì? Nếu rút nó ra thì sao?</summary>
+            <div class="qa-hint"><strong>💡 Gợi ý tư duy:</strong> Đó là điện trở kéo xuống (Pull-down). Nếu rút ra, khi nhả tay khỏi nút, chân tín hiệu rơi vào trạng thái "lửng lơ" (Floating), thu nhiễu sóng điện từ môi trường. Vi điều khiển sẽ bị ảo giác, đọc giá trị nhảy loạn 0-1 liên tục khiến đèn tự chớp tắt.</div>
+        </details>
+
+        <details class="interactive-qa">
+            <summary>3. Sự khác biệt giữa Mạch Pull-down và Mạch Pull-up là gì?</summary>
+            <div class="qa-hint">
+                <strong>💡 Gợi ý tư duy:</strong> <br>
+                - <strong>Pull-down (Kéo xuống):</strong> Dùng điện trở nối Mass (GND). Trạng thái thả tay: <code>LOW</code> (0V). Khi BẤM NÚT (Nối 3.3V): Chân vi xử lý nhận <code>HIGH</code>. Đây là thiết kế đang dùng ở Lab này.<br>
+                - <strong>Pull-up (Kéo lên):</strong> Dùng điện trở nối Nguồn (VCC). Trạng thái thả tay: <code>HIGH</code> (3.3V). Khi BẤM NÚT (Nối Mass): Chân vi xử lý bị kéo xuống <code>LOW</code> (Logic đảo ngược).
+            </div>
+        </details>
+
+        <details class="interactive-qa">
+            <summary>4. Tại sao màn hình LCD 1602 lại phải cắm dây nguồn vào lỗ VIN thay vì 3.3V?</summary>
+            <div class="qa-hint"><strong>💡 Gợi ý tư duy:</strong> Chip điều khiển và đèn nền của màn LCD 1602 tiêu chuẩn được thiết kế hoạt động ở điện áp 5V. Chân 3.3V không cung cấp đủ áp, khiến màn hình bị tối mờ, rác chữ. Chân VIN trên NodeMCU lấy điện áp 5V trực tiếp từ cáp USB bypass qua.</div>
+        </details>
+
+        <details class="interactive-qa">
+            <summary>5. Bẫy lỗi <code>if (isnan(t))</code> có mục đích gì? <code>NaN</code> là gì?</summary>
+            <div class="qa-hint"><strong>💡 Gợi ý tư duy:</strong> NaN (Not a Number) là kết quả trả về khi hàm đọc dữ liệu từ DHT11 bị thất bại (do đứt cáp hoặc đọc quá giới hạn tần số 2 giây/lần của cảm biến). Lệnh IF giúp "bẫy" cái lỗi này lại, ngăn không cho in chữ NaN lên LCD làm hỏng giao diện hiển thị.</div>
+        </details>
     </div>
 
     <!-- 12. CẢNH BÁO CODE MÙ QUÁNG -->
-    <h2 id="canh-bao-code">12. CHỐNG HỌC VẸT: Bẫy Copy Code Mù Quáng</h2>
-    <div class="danger-box callout">
-        <span class="callout-title">5 Dấu hiệu tố cáo Sinh viên đang "Học Vẹt" Lab 2:</span>
-        <ol>
-            <li>Code báo lỗi đỏ lòm <code>No matching function for call to LiquidCrystal_I2C</code> nhưng lại hoang mang gọi Thầy cấp cứu, thay vì biết đường tự chui vào Library Manager gõ tìm và cài đặt thư viện bị thiếu.</li>
-            <li>Thấy màn hình LCD sáng đèn nền màu xanh nhưng <strong>trống trơn không hiện một chữ nào</strong>. Sinh viên vội vã hì hục đi nạp lại code 10 lần thay vì thò tay ra sau lưng màn hình, lấy tua-vít vặn cái núm biến trở (Contrast) để chỉnh độ nét của chữ.</li>
-            <li>Code in ra màn hình chữ <code>NaN</code>, sinh viên lớn tiếng khẳng định "Code của Thầy bị sai rồi", trong khi bản chất là do tay cắm lỏng dây Data của cảm biến DHT11.</li>
-            <li>Nạp code Copy y nguyên trong sách PDF gốc (có chứa dòng <code>lcd(0x00, 16, 2)</code>) và phàn nàn tại sao màn hình đứng hình câm điếc, mà không hề ý thức được việc phải tự đi chạy Tool I2C Scanner để tìm ra địa chỉ <code>0x27</code>.</li>
-            <li>Nút bấm chập chờn, lúc ăn lúc không, lúc tự chớp tự tắt. Không nhận ra lỗi "Trôi nổi điện áp" cơ bản nhất vì cắm con điện trở 10k trật khỏi đường rãnh thông mạch của Breadboard.</li>
-        </ol>
-    </div>
-    
+    <h2 id="canh-bao-code">🛑 12. Chống Học Vẹt & Cảnh Báo Logic</h2>
     <div class="warning-box callout">
-        <span class="callout-title">"Nếu em chỉ Copy Code, em sẽ KHÔNG HIỂU các điểm chết người nào?"</span>
-        <p>- <strong>Điểm mù 1 (State Machine/Máy trạng thái):</strong> <em>"Tại sao cái code nút nhấn nó lằng nhằng thế, đẻ ra cả đống cờ <code>switchState</code> rồi <code>oldSwitchState</code>?"</em> <br>=> Vì nếu em chỉ copy, em sẽ không hiểu thuật toán vi tính chạy tốc độ hàng triệu vòng/giây. Nếu không lưu lại "Trạng thái cũ" để so sánh tìm ra khoảnh khắc "Sự thay đổi sườn tín hiệu", thì cái chạm tay 0.1 giây của em sẽ bị vi điều khiển hiểu là em đang bấm liên tục 1000 lần, đèn sẽ chớp giật như vũ trường.</p>
-        <p>- <strong>Điểm mù 2 (Debounce/Khử rung):</strong> <em>"Có cái lệnh <code>delay(50);</code> vô duyên giấu trong hàm nút nhấn để làm gì?"</em> <br>=> Lò xo kim loại trong nút bấm khi đập vào nhau sẽ tưng nảy lên xuống vi mô tạo ra tia lửa điện nhiễu. Vi điều khiển rất nhạy sẽ đọc lầm thành 3-4 lần bấm. Lệnh delay 50ms là thủ thuật phần mềm kinh điển để "bịt tai" con chip lại, chờ lò xo nằm im ổn định rồi mới mở mắt ra đọc kết quả xét tiếp.</p>
+        <span class="callout-title">Khái niệm học thuật: Blocking vs Non-Blocking (Debounce)</span>
+        <p><strong>Tại sao có hàm <code>delay(50)</code> trong code nút nhấn?</strong><br>
+        Lò xo kim loại trong nút bấm khi đập vào nhau sẽ tưng nảy vi mô tạo ra tia lửa điện nhiễu (Bouncing). Vi điều khiển rất nhạy sẽ đọc lầm thành 3-4 lần bấm. Lệnh <code>delay(50);</code> là thủ thuật <strong>Khử rung (Debounce)</strong> phần mềm, bắt vi xử lý "nhắm mắt" 50ms chờ lò xo ổn định rồi mới đọc tiếp.</p>
+        
+        <p><strong><span style="color:red">LƯU Ý QUAN TRỌNG:</span></strong> Trong Lab 2, mạch hoạt động <strong>Offline</strong> nên việc dùng <code>delay(50)</code> là chấp nhận được. Tuy nhiên, <code>delay()</code> là hàm "Blocking" (chặn luồng, cấm vi xử lý làm việc khác). Từ Lab 03 trở đi, khi hệ thống cần kết nối Internet liên tục, việc dùng <code>delay()</code> sẽ làm rớt gói tin mạng. Chúng ta sẽ phải chuyển sang dùng hàm <strong><code>millis()</code> (Non-blocking Debounce)</strong>.</p>
+    </div>
+
+    <div class="danger-box callout">
+        <span class="callout-title">Các dấu hiệu "Học Vẹt" cần loại bỏ:</span>
+        <ul style="margin-top: 10px;">
+            <li>Thấy màn hình LCD sáng nền nhưng <strong>trống trơn không hiện một chữ nào</strong>. Sinh viên vội vã hì hục đi nạp lại code 10 lần thay vì thò tay ra sau lưng màn hình, lấy tua-vít vặn núm biến trở (Contrast) để chỉnh độ nét của chữ.</li>
+            <li>Code in ra màn hình <code>NaN</code>, sinh viên lớn tiếng "Code của Thầy bị sai", trong khi bản chất là cắm lỏng cáp Jumper nối DHT11.</li>
+            <li>Nạp code Copy y nguyên trên mạng (để địa chỉ <code>0x27</code>) và phàn nàn tại sao màn hình câm điếc, mà không hề ý thức được lô màn hình của mình dùng chip A có địa chỉ <code>0x3F</code>.</li>
+        </ul>
     </div>
 
     <!-- 13. PHÂN TÍCH CODE -->
-    <h2 id="phan-tich-code">13. Phân tích Mã nguồn Chuẩn học thuật (Mã nguồn Cố ý Sinh Lỗi)</h2>
+    <h2 id="phan-tich-code">💻 13. Phân tích Mã nguồn (Mã nguồn Cố ý Sinh Lỗi)</h2>
     <div class="section-card">
-        <p>Mã nguồn này được chia làm 2 phần rõ rệt, tương ứng với 2 giai đoạn thực hành. Hãy đọc kỹ các comment (chú thích) để hiểu <strong>Thuật toán (Algorithm)</strong> đằng sau nó. <br>
-        <span class="placeholder">CẢNH BÁO BẪY COPY: Trong cả 2 khối code, tôi đã thay thế các chân cắm và địa chỉ I2C bằng cú pháp ngoặc nhọn `<...>`. Nếu bạn chỉ Copy Paste mù quáng, Trình biên dịch C++ sẽ BÁO LỖI ĐỎ NGAY LẬP TỨC (Syntax Error). Bạn BẮT BUỘC phải đọc và thay `<...>` bằng các con số thực tế (Vd: 12, 13, 0x27) thì Code mới chạy. Đây là cách luyện tư duy Kỹ sư.</span></p>
+        <p><span class="placeholder">CẢNH BÁO: Trong các khối code dưới đây, tôi đã thay thế các chân cắm và địa chỉ I2C bằng cú pháp ngoặc nhọn `&lt;...&gt;`. Nếu bạn chỉ Copy Paste mù quáng, Trình biên dịch C++ sẽ BÁO LỖI ĐỎ (Syntax Error). Bạn BẮT BUỘC phải thay đổi `&lt;...&gt;` bằng các con số thực tế (VD: 12, 13, 0x27) thì Code mới chạy.</span></p>
         
         <h3>MÔ-ĐUN 1: Thuật toán Bắt sự kiện Nút nhấn (Toggle Logic & Debounce)</h3>
         <pre><code>// XÓA DẤU NGOẶC NHỌN VÀ ĐIỀN ĐÚNG MÃ GPIO CỦA CHÂN D6 VÀ D7 VÀO ĐÂY!
-int ledPin = <NHẬP_MÃ_GPIO_CỦA_CHÂN_D6>;      
-int buttonPin = <NHẬP_MÃ_GPIO_CỦA_CHÂN_D7>;   
+int ledPin = &lt;NHẬP_MÃ_GPIO_CHÂN_D6&gt;;      
+int buttonPin = &lt;NHẬP_MÃ_GPIO_CHÂN_D7&gt;;   
 
-int switchState = 0;      // Biến chứa điện áp hiện tại của nút (1: Đang đè, 0: Thả ra)
-int oldSwitchState = 0;   // Kho lưu trữ điện áp của 1 tíc-tắc trong quá khứ
+int switchState = 0;      // Điện áp hiện tại của nút (1: Đang bấm, 0: Thả ra)
+int oldSwitchState = 0;   // Kho lưu trữ điện áp trong quá khứ để so sánh
 int lightsOn = 0;         // Cờ (Flag) lưu trạng thái logic của đèn (0: Tắt, 1: Sáng)
 
 void setup() {
-    pinMode(buttonPin, INPUT); // Nút nhấn là Nguồn Cấp tín hiệu vào (INPUT)
-    pinMode(ledPin, OUTPUT);   // LED là Thiết bị Nhận tín hiệu ra (OUTPUT)
+    pinMode(buttonPin, INPUT); // Nút nhấn là Đầu vào. Lưu ý: Mạch dùng trở Pull-down ngoài
+    pinMode(ledPin, OUTPUT);   // LED là Đầu ra
 }
 
 void loop() {
-    switchState = digitalRead(buttonPin); // Chụp ảnh điện áp tại chân Nút nhấn ngay lúc này
+    switchState = digitalRead(buttonPin); // Chụp ảnh điện áp chân nút nhấn ngay lúc này
 
     // THUẬT TOÁN EDGE DETECTION (Phát hiện sườn tín hiệu chuyển mạch):
-    // Chỉ chạy code bên trong nếu có sự THAY ĐỔI cơ học (Từ thả -> Bấm, hoặc Bấm -> thả)
+    // Chỉ chạy code nếu có sự THAY ĐỔI cơ học (Từ thả ➔ Bấm, hoặc Bấm ➔ Thả)
     if (switchState != oldSwitchState) 
     {
-        delay(50); // THỦ THUẬT DEBOUNCE: Ngủ 50ms để triệt tiêu sóng rung của lò xo cơ học
+        // THỦ THUẬT DEBOUNCE (Blocking Delay): Chờ 50ms cho lò xo kim loại hết nảy
+        // Sẽ được thay thế bằng millis() ở Lab 3
+        delay(50); 
         
-        // Sàng lọc kỹ: Nếu sự thay đổi đó chính xác là hành động "Đang đè nút xuống"
+        // Mạch Pull-down: Khi bấm nút sẽ nối với 3.3V (Đọc giá trị HIGH)
+        // Nếu sự thay đổi đó chính xác là hành động "Đang đè nút xuống"
         if (switchState == HIGH) 
         {
-            lightsOn = !lightsOn; // Toán tử Đảo logic (!): Nếu đang 0 thành 1, đang 1 lật thành 0
+            lightsOn = !lightsOn; // Toán tử Đảo logic (!): Đang 0 thành 1, đang 1 lật thành 0
             
             // Xả điện áp vật lý ra chân phần cứng LED dựa theo Cờ logic vừa lật
             if (lightsOn == 1) { digitalWrite(ledPin, HIGH); }
             else { digitalWrite(ledPin, LOW); }
         }
     }
-    // GHI ĐÈ Hiện tại vào Quá khứ để vòng lặp tiếp theo có dữ liệu lịch sử để so sánh
+    // GHI ĐÈ Hiện tại vào Quá khứ để vòng lặp tiếp theo có dữ liệu để so sánh
     oldSwitchState = switchState;  
 }</code></pre>
 
-        <h3>MÔ-ĐUN 2: Tích hợp Đọc Cảm biến & Viết lên LCD I2C (Custom Character)</h3>
-        <p><em>(Đã tích hợp mã tạo Ký tự Độ C [°], bẫy ngoại lệ NaN và thuật toán xóa rác màn hình)</em></p>
+        <h3 style="margin-top: 30px;">MÔ-ĐUN 2: Tích hợp Đọc Cảm biến & Viết lên LCD I2C</h3>
+        <p><em>(Đã tích hợp mã tạo Ký tự Độ C [°], bẫy ngoại lệ NaN và thuật toán chống rác màn hình)</em></p>
         <pre><code>#include &lt;Wire.h&gt;
 #include &lt;LiquidCrystal_I2C.h&gt;
 #include "DHT.h"
 
 // XÓA NGOẶC NHỌN, ĐIỀN ĐÚNG MÃ GPIO CỦA D5
-#define DHTPIN <NHẬP_MÃ_GPIO_CỦA_CHÂN_D5>        
-#define DHTTYPE DHT11    // Báo cho thư viện biết đây là loại DHT11 (Không phải DHT22)
+#define DHTPIN &lt;NHẬP_MÃ_GPIO_CHÂN_D5&gt;        
+#define DHTTYPE DHT11    // Khai báo đúng loại cảm biến (DHT11, không phải DHT22)
 
 DHT dht(DHTPIN, DHTTYPE); 
 
 // KHỞI TẠO ĐỐI TƯỢNG MÀN HÌNH: 
-// Lời nguyền: Phải đổi thông số dưới đây thành địa chỉ I2C thực tế 
-// của bạn nếu không màn sẽ không lên chữ! (Hãy xóa dấu < và > đi)
-LiquidCrystal_I2C lcd(<NHẬP_ĐỊA_CHỈ_I2C_VÀO_ĐÂY_VD_0x27>, 16, 2); 
+// Xóa ngoặc <...> và điền kết quả tìm được từ I2C Scanner (VD: 0x27 hoặc 0x3F)
+LiquidCrystal_I2C lcd(&lt;ĐỊA_CHỈ_I2C_CỦA_BẠN&gt;, 16, 2); 
 
-// MẢNG DỮ LIỆU ĐỒ HỌA: Tạo ký tự biểu tượng Độ C (°)
+// MẢNG DỮ LIỆU ĐỒ HỌA: Tạo ký tự biểu tượng Độ C (°) bằng mã nhị phân
 byte degree[8] = {
   0B01110,
   0B01010,
@@ -589,55 +772,52 @@ byte degree[8] = {
   0B00000
 };
 
-// Khai báo lại các biến nút nhấn của Mô-đun 1 ở đây (Đã ẩn đi cho code ngắn gọn)
-// ...
+// ... (Khai báo các biến nút nhấn của Mô-đun 1 ở đây) ...
 
 void setup() {
     Serial.begin(115200);
     dht.begin();
     
-    // Khởi tạo các pinMode của Mô-đun 1
-    // ...
+    // ... (Khởi tạo pinMode của Mô-đun 1) ...
     
-    lcd.init();       // Cấp điện đánh thức chip điều khiển của màn hình
-    lcd.backlight();  // Bật đèn nền (Backlight) cho sáng lên
+    lcd.init();       // Cấp điện đánh thức màn hình
+    lcd.backlight();  // Bật đèn nền (Backlight)
     
-    // Nạp ký tự Độ C vào bộ nhớ CGRAM của màn hình ở vị trí số 1
+    // Nạp ký tự Độ C vào bộ nhớ CGRAM của màn hình ở vị trí slot 1
     lcd.createChar(1, degree);
     
     // IN KHUNG XƯƠNG CỐ ĐỊNH (Chỉ in 1 lần duy nhất trong Setup)
-    // Cấm bỏ lệnh này vào loop vì nó sẽ làm màn hình chớp giật liên hồi
-    lcd.setCursor(0, 0); // Di dời con trỏ: Cột số 0, Hàng số 0 (Dòng trên)
+    // Tránh bỏ lệnh này vào loop() vì sẽ làm màn hình chớp giật liên hồi
+    lcd.setCursor(0, 0); // Di dời con trỏ: Cột 0, Hàng 0 (Dòng trên)
     lcd.print("Nhiet do: ");
-    lcd.setCursor(0, 1); // Di dời con trỏ: Cột số 0, Hàng số 1 (Dòng dưới)
+    lcd.setCursor(0, 1); // Di dời con trỏ: Cột 0, Hàng 1 (Dòng dưới)
     lcd.print("Do am: ");
 }
 
 void loop() {
-    // Để nguyên toàn bộ code xử lý Nút Nhấn của Mô-đun 1 chạy tự do ở đây
-    // ...
+    // ... (Để nguyên khối code xử lý Nút Nhấn của Mô-đun 1 ở đây) ...
 
-    // LUẬT THÉP CỦA DHT11: Cảm biến này đo rất chậm.
-    // Nếu gọi nó liên tục, nó sẽ treo. Phải ép chip chờ ít nhất 2 giây (2000ms).
+    // LUẬT THÉP CỦA DHT11: Đo rất chậm.
+    // Nếu ép đọc quá nhanh, vi mạch cảm biến sẽ treo. Phải chờ 2 giây (2000ms).
     delay(2000); 
 
-    // Ra lệnh cho thư viện 1-wire kéo dữ liệu vật lý về biến C++
+    // Ra lệnh thư viện kéo dữ liệu vật lý về biến số thực (float)
     float h = dht.readHumidity();
     float t = dht.readTemperature();
 
-    // BẪY LỖI PHẦN CỨNG (EXCEPTION HANDLING):
-    // Đừng bao giờ tin tưởng phần cứng. Dây lỏng = NaN (Not a Number).
+    // BẪY LỖI EXCEPTION (NaN - Not a Number):
+    // Không bao giờ tin tưởng phần cứng tuyệt đối. Lỏng cáp = dữ liệu lỗi.
     if (isnan(h) || isnan(t)) {
-        Serial.println(">> CẢNH BÁO: Không thể giao tiếp với cảm biến DHT11!");
-        return; // Thoát ngang vòng lặp loop ngay lập tức, bỏ qua các lệnh in LCD bên dưới
+        Serial.println(">> CẢNH BÁO: Mất tín hiệu giao tiếp với DHT11!");
+        return; // Dừng chạy khối lệnh phía dưới, quay lại đầu vòng lặp loop()
     }
 
     // ĐIỀN THÔNG SỐ ĐỘNG VÀO KHUNG XƯƠNG LCD
     lcd.setCursor(10, 0); 
     lcd.print(round(t)); 
-    lcd.print((char)1); // In ra ký tự Độ C vừa tạo ở trên
-    lcd.print("C  ");  // THỦ THUẬT: Cố tình chèn 2 khoảng trắng "  " ở đuôi. 
-                       // Tác dụng: Xóa bóng ma số dư thừa nếu nhiệt độ rớt từ 32 C xuống 9 C.
+    lcd.print((char)1); // In ra ký tự Độ C vừa tự tạo ở trên
+    lcd.print("C  ");  // THỦ THUẬT: Cố tình in thêm khoảng trắng "  " ở đuôi. 
+                       // Để đè bẹp bóng ma ký tự cũ nếu nhiệt độ rớt từ 2 chữ số (32) xuống 1 (9).
 
     lcd.setCursor(7, 1);
     lcd.print(round(h)); 
@@ -646,84 +826,91 @@ void loop() {
     </div>
 
     <!-- 14. CHECKLIST -->
-    <h2 id="checklist">14. Checklist Nghiệm thu Mạch Điện (Bảo vệ Phần cứng)</h2>
+    <h2 id="checklist">✅ 14. Checklist Nghiệm thu Mạch Điện</h2>
     <div class="section-card">
-        <h3>A. Checklist TRƯỚC khi cắm cáp USB (Phòng chống Cháy nổ)</h3>
-        <div class="checklist-item"><input type="checkbox"> 1. Dùng mắt quét toàn bộ Breadboard: Có đường dây nào nối trực tiếp từ rãnh Đỏ (3.3V/VIN) sang rãnh Xanh/Đen (GND) không? (Nếu có -> Đoản mạch, cắm vào khói sẽ bay nghi ngút).</div>
-        <div class="checklist-item"><input type="checkbox"> 2. Chân Dài (Anode) của LED đã có điện trở 220Ω cản dòng bảo vệ chặn phía trước chưa?</div>
-        <div class="checklist-item"><input type="checkbox"> 3. Nút nhấn đã có điện trở 10kΩ mỏ neo ghim chặt một nhánh tín hiệu xuống Mass (GND) để chống trôi nổi điện áp chưa?</div>
-        <div class="checklist-item"><input type="checkbox"> 4. Dây VCC của màn hình LCD 1602 đã cắm vào chân <strong>VIN</strong> (Lấy điện 5V bypass từ USB) chưa?</div>
-        <div class="checklist-item"><input type="checkbox"> 5. Dây tín hiệu I2C có bị bắt chéo không? Luật phần cứng: SDA chọc D2, SCL chọc D1.</div>
+        <h3>A. Checklist TRƯỚC khi cấp nguồn USB (Phòng chống Đoản mạch)</h3>
+        <div class="checklist-item"><input type="checkbox"> 1. Quét mắt toàn bộ Breadboard: KHÔNG có sợi dây nào cắm trực tiếp từ rãnh Đỏ (3.3V/VIN) sang thẳng rãnh Xanh (GND).</div>
+        <div class="checklist-item"><input type="checkbox"> 2. Chân Dài (+) của LED ĐÃ CÓ điện trở 220Ω bảo vệ cản dòng.</div>
+        <div class="checklist-item"><input type="checkbox"> 3. Mạch nút nhấn ĐÃ CÓ điện trở 10kΩ kéo một nhánh tín hiệu ghim xuống Mass (GND).</div>
+        <div class="checklist-item"><input type="checkbox"> 4. Dây VCC của màn hình LCD 1602 đã cắm đúng vào chân <strong>VIN</strong> (Lấy điện 5V bypass) chưa?</div>
+        <div class="checklist-item"><input type="checkbox"> 5. Dây I2C không bị lộn chéo: SDA nối D2, SCL nối D1.</div>
 
-        <h3>B. Checklist SAU khi nạp Code thành công (Chạy thực tế)</h3>
-        <div class="checklist-item"><input type="checkbox"> 1. <strong>Test Logic Nút:</strong> Bấm tay dứt khoát 1 lần -> Đèn bật sáng tĩnh. Bấm 1 lần nữa -> Đèn tắt ngóm dứt khoát.</div>
-        <div class="checklist-item"><input type="checkbox"> 2. <strong>Test Render LCD:</strong> Đèn nền sáng bừng. Nếu mờ tịt không thấy chữ, đã nhanh trí lấy tua-vít vặn núm tinh chỉnh (Contrast) sau lưng module I2C chưa?</div>
-        <div class="checklist-item"><input type="checkbox"> 3. <strong>Test Sensor Live:</strong> Dùng lòng bàn tay nắm chặt vỏ cảm biến DHT11 để truyền nhiệt độ cơ thể. Đứng đếm 2, 3, 4 giây... con số Nhiệt độ và Độ ẩm trên màn hình LCD phải tăng tịnh tiến lên. Dấu Độ C (°) hiển thị hoàn hảo.</div>
+        <h3 style="margin-top: 20px;">B. Checklist SAU khi nạp Code thành công</h3>
+        <div class="checklist-item"><input type="checkbox"> 1. <strong>Test Bập bênh Nút:</strong> Bấm dứt khoát 1 lần <span class="inline-arrow">➔</span> Đèn bật sáng tĩnh. Bấm lần nữa <span class="inline-arrow">➔</span> Đèn tắt gọn gàng (Không chớp giật).</div>
+        <div class="checklist-item"><input type="checkbox"> 2. <strong>Test Render LCD:</strong> Đèn nền sáng bừng. Nếu không thấy chữ, ĐÃ LẤY TUA-VÍT vặn tinh chỉnh biến trở Contrast sau lưng màn hình.</div>
+        <div class="checklist-item"><input type="checkbox"> 3. <strong>Test Dữ liệu thực:</strong> Áp chặt lòng bàn tay vào DHT11 để truyền thân nhiệt. Chờ 2-4 giây, con số Nhiệt/Ẩm trên màn hình phải thay đổi tịnh tiến. Ký hiệu (°) hiển thị đẹp mắt.</div>
     </div>
 
     <!-- 15. DEBUG -->
-    <h2 id="debug">15. Debug và Xử lý sự cố Phần cứng</h2>
-    <table class="debug-table">
+    <h2 id="debug">🛠 15. Bảng Tra cứu Xử lý Sự cố (Troubleshooting)</h2>
+    <table>
         <tr>
-            <th>Hiện tượng Quan sát bằng mắt</th>
-            <th>Căn nguyên Kỹ thuật ẩn giấu</th>
-            <th>Hành động Can thiệp (Troubleshooting)</th>
+            <th>Hiện tượng Quan sát</th>
+            <th>Căn nguyên Kỹ thuật</th>
+            <th>Cách Khắc phục</th>
         </tr>
         <tr>
-            <td>Nút bấm bị "Ma nhập": Tay chưa chạm vào hoặc chỉ vẫy qua vẫy lại mà đèn LED đã tự động chớp nháy như điên.</td>
-            <td>Chân tín hiệu GPIO bị "Floating" (Trôi nổi điện áp). Cơ thể bạn biến thành một cái tụ điện, phát tĩnh điện làm nhiễu ăng-ten của vi điều khiển.</td>
-            <td>Gần như 100% là do bạn cắm sai lệch chân điện trở 10kΩ. Hãy rút trở ra, cắm 1 đầu CHUNG LỖ RÃNH NGANG với sợi dây tín hiệu nối về D7, đầu kia phi thẳng vào thanh GND (-).</td>
+            <td>Nút bấm bị "Ma nhập": Tay chưa chạm mà đèn LED tự chớp nháy hỗn loạn.</td>
+            <td>Chân tín hiệu GPIO bị "Floating" (Trôi nổi áp). Mạch hở thu tĩnh điện môi trường.</td>
+            <td>Gần như 100% do cắm lỏng chân điện trở kéo 10kΩ. Rút ra, đảm bảo 1 đầu cắm chung hàng ngang với cáp tín hiệu D7, đầu kia phi xuống rãnh Mass (-).</td>
         </tr>
         <tr>
-            <td>Đèn nền LCD sáng chói rực rỡ, nhưng trên màn chỉ <strong>toàn các ô vuông đen kịt</strong> ở dòng trên cùng, hoặc <strong>trắng bóc</strong> không có nét chữ.</td>
-            <td>Lỗi 1: Cường độ tương phản (Contrast) phần cứng bị lệch.<br>Lỗi 2: Bạn lười, chép nguyên code PDF mẫu (để địa chỉ <code>0x00</code> hoặc <code>0x27</code>) trong khi lô màn hình bạn mua lại mang địa chỉ <code>0x3F</code>.</td>
-            <td>1. Lật lưng LCD lại, dùng tua-vít vặn nhích từ từ núm xoay nhỏ hình chữ thập (màu xanh dương).<br>2. Chạy lại file code "I2C Scanner" trên mạng để rà quét tìm địa chỉ Hex chính xác rồi thay vào code C++.</td>
+            <td>LCD sáng chói nhưng <strong>toàn các ô vuông đen kịt</strong>, hoặc <strong>trắng bóc không có chữ</strong>.</td>
+            <td>Lỗi 1: Tương phản phần cứng chưa cân chỉnh.<br>Lỗi 2: Nhập sai địa chỉ I2C (0x27 vs 0x3F).</td>
+            <td>1. Lật lưng LCD, dùng tua-vít vặn núm xoay nhỏ màu xanh.<br>2. Chạy lại tool "I2C Scanner" để quét tìm địa chỉ chuẩn và thay vào Code C++.</td>
         </tr>
         <tr>
-            <td>Trình Serial Monitor xả ra thông báo <code>Loi: Khong the doc du lieu</code> hoặc màn hình LCD toàn số <code>NaN</code> liên tục.</td>
-            <td>Giao thức 1-Wire đứt gãy. MCU gào lên nhưng cảm biến câm nín. Nguyên nhân: Nối sai dây Data, cáp Jumper Tàu bị đứt lõi ngầm, hoặc DHT hỏng phần cứng.</td>
-            <td>Kiểm tra chân Data của DHT có cắm đúng vào D5 không. Đảm bảo trong hàm <code>loop()</code> có đúng lệnh <code>delay(2000);</code> (Ép đọc quá nhanh sẽ làm cảm biến sụp nguồn). Thử đổi một sợi cáp Jumper màu khác.</td>
+            <td>Serial Monitor báo <code>Khong the doc du lieu</code> hoặc màn hình LCD in rác số <code>NaN</code>.</td>
+            <td>DHT11 mất kết nối (lỏng dây Data, đứt cáp Jumper) hoặc bị hàm Code ép lấy mẫu quá tốc độ 2 giây.</td>
+            <td>Kiểm tra cáp Data cắm vào D5. Rà soát xem trong hàm <code>loop()</code> đã có lệnh <code>delay(2000);</code> chưa. Thay cáp Jumper Data khác để test.</td>
         </tr>
         <tr>
-            <td>Chạy tool I2C Scanner nhưng màn hình Serial tàn nhẫn báo <code>No I2C devices found</code>, code màn hình kẹt cứng.</td>
-            <td>Chip giao tiếp LCD chưa được ăn đủ điện áp (Cắm nhầm 3.3V) hoặc bạn cắm lộn ngược 2 dây Data/Clock.</td>
-            <td>Rút 4 dây ra cắm lại. VCC bắt buộc cắm VIN (5V). SDA bắt buộc cắm D2, SCL bắt buộc cắm D1. Nếu cắm sai 2 dây SDA/SCL cho nhau, phần mềm dò quét sẽ mù lòa.</td>
+            <td>Tool I2C Scanner quét ra kết quả tàn nhẫn: <code>No I2C devices found</code>.</td>
+            <td>Thiếu nguồn cấp (cắm nhầm 3.3V thay vì 5V/VIN) hoặc cắm lộn ngược chéo 2 dây SDA và SCL.</td>
+            <td>VCC phải cắm vào VIN (5V). Rút cắm lại SDA vào D2, SCL vào D1. Quét lại tool Scanner.</td>
         </tr>
     </table>
 
     <!-- 16. TỰ ĐÁNH GIÁ & MỞ RỘNG -->
-    <h2 id="danh-gia">16. Tự đánh giá & Mini Task Mở rộng</h2>
+    <h2 id="danh-gia">🏆 16. Tự đánh giá & Mini Task Mở rộng</h2>
     <div class="section-card">
-        <h3>Bài tập Suy luận Kỹ thuật (Phản biện):</h3>
+        <h3>Bài tập Suy luận Kỹ thuật:</h3>
         <ol>
-            <li>Trong thuật toán điều khiển Nút nhấn, tại sao một Kỹ sư Nhúng lại không viết câu lệnh <code>if (lightsOn == 0) { lightsOn = 1; } else { lightsOn = 0; }</code> cực kỳ dài dòng, mà lại xài một cú pháp sát thủ <code>lightsOn = !lightsOn;</code>? Sức mạnh của toán tử NOT (<code>!</code>) nằm ở đâu?</li>
-            <li>Đang code ngon lành, bạn thử xóa dòng <code>#include &lt;LiquidCrystal_I2C.h&gt;</code> trên đỉnh đầu. Bấm Compile, IDE chửi ngay lỗi <code>'lcd' was not declared in this scope</code> ngay tại hàm <code>lcd.print()</code>. Bản chất Thư viện (Library) đóng vai trò là quyển từ điển gì đối với trình biên dịch C++?</li>
+            <li>Trong thuật toán chuyển đổi trạng thái, tại sao Kỹ sư Nhúng không dùng <code>if/else</code> dài dòng mà lại dùng toán tử <code>lightsOn = !lightsOn;</code>? Sức mạnh của toán tử NOT (<code>!</code>) ở đây là gì?</li>
+            <li>Thử xóa dòng <code>#include &lt;LiquidCrystal_I2C.h&gt;</code>. Khi biên dịch IDE báo lỗi <code>'lcd' was not declared in this scope</code> ngay tại lệnh in chữ. Điều này chứng minh Bản chất Thư viện (Library) đóng vai trò gì cho trình biên dịch C++?</li>
         </ol>
 
-        <h3>Mini Tasks Chinh phục (Thực hành ngay tại Phòng Lab):</h3>
+        <h3 style="margin-top: 25px;">Thử thách Phòng Lab (Thực hành ngay):</h3>
         <div class="student-box callout">
-            <span class="callout-title">Mini Task 1: "Hệ Thống Báo Cháy" (Gộp Mô-đun Kịch bản)</span>
-            Bạn đã làm chủ code LED và code DHT11. Hãy GỘP chúng lại vào một file duy nhất. 
-            <br>=> <strong>Nhiệm vụ tác chiến:</strong> Xóa bỏ mảng code vướng víu của cái nút nhấn đi. Hãy viết thêm một luật Logic: Nếu biến <code>t</code> (hàm <code>dht.readTemperature()</code>) vượt ngưỡng <strong>31.0°C</strong> (Do bạn dùng tay áp sát truyền nhiệt vào cảm biến), vi điều khiển sẽ <strong>tự động xuất HIGH ra chân D6 để bật đèn LED cảnh báo đỏ</strong>. Khi nhiệt độ làm mát rớt xuống dưới 31, tự động xả LOW tắt đèn. Chúc mừng, bạn vừa sáng chế ra Hệ thống Tự động hóa đầu đời!
+            <span class="callout-title">Mini Task 1: "Hệ Thống Cảnh Báo" (Tích hợp Module)</span>
+            <p>Xóa bỏ chức năng bấm nút đi. Hãy thiết lập một luật Logic Tự Động: <strong>Nếu nhiệt độ (t) vượt ngưỡng 31.0°C</strong> (Do bạn dùng tay áp sát làm nóng DHT11), vi điều khiển sẽ <strong>tự động xuất mức HIGH ra chân D6 để bật đèn LED báo động đỏ</strong>. Khi nhiệt độ hạ xuống dưới 31°C, tự động xả LOW tắt đèn. Chúc mừng, bạn đã tạo ra hệ thống tự động hóa đầu tiên!</p>
         </div>
-        <div class="student-box callout">
-            <span class="callout-title">Mini Task 2: Cấp độ Kỹ sư - Lệnh Gọi Trở Kéo Nội Bộ (INPUT_PULLUP)</span>
-            Việc phải cắm thêm con điện trở 10kΩ lằng nhằng bên ngoài (Pull-down) khiến mạch rất tốn diện tích và dễ cắm sai. Ít ai biết rằng, bên trong lòng con chip ESP8266 đã được nhà sản xuất đúc sẵn hàng tá các điện trở siêu nhỏ!
-            <br>=> <strong>Nhiệm vụ:</strong> Hãy rút phăng con điện trở 10kΩ trên Breadboard ra vứt đi. Chân tín hiệu của nút nhấn bây giờ cắm thẳng vào D7. Phía bên kia của nút nhấn, thay vì cắm vào 3.3V, hãy cắm nó vào <strong>GND</strong>. 
-            <br>=> <strong>Sửa Code:</strong> Sửa dòng <code>pinMode(buttonPin, INPUT);</code> thành <code>pinMode(buttonPin, INPUT_PULLUP);</code>. Động não suy nghĩ xem: Lúc này khi bấm nút, chân D7 nhận mức LOW hay HIGH? Sửa lại logic vòng if để đèn vẫn bật/tắt đúng. Đây chính là cách các xưởng công nghiệp tiết kiệm linh kiện!
+        
+        <div class="student-box callout" style="border-color: #f44336; background: #ffebee;">
+            <span class="callout-title" style="color: #c62828;">Mini Task 2: Cấp độ Kỹ sư - Tiết kiệm linh kiện với INPUT_PULLUP</span>
+            <p>Việc cắm điện trở ngoài 10kΩ (Pull-down) rất rườm rà. Thực tế, bên trong lõi chip ESP8266 đã tích hợp sẵn các điện trở "Kéo lên nguồn" siêu nhỏ (Pull-up).<br>
+            👉 <strong>Nhiệm vụ:</strong> Rút bỏ điện trở 10kΩ ngoài. Cắm trực tiếp một đầu Nút bấm vào <strong>D7</strong>, đầu còn lại cắm vào <strong>GND</strong>.<br>
+            👉 <strong>Đổi Code:</strong> Sửa <code>pinMode(buttonPin, INPUT);</code> thành <code>pinMode(buttonPin, INPUT_PULLUP);</code>. Động não: Lúc này, khi chưa bấm thì chân D7 ở mức điện áp nào? Khi bấm xuống chạm Mass thì điện áp về đâu? Sửa lại khối <code>if</code> sao cho logic lật trạng thái đèn vẫn đúng!</p>
         </div>
     </div>
 
-    <!-- 17. MENTORING CHO GIẢNG VIÊN -->
-    <h2 id="mentor">17. Sổ tay Điều phối dành riêng cho Giảng viên / Mentor</h2>
+    <!-- 17. LỜI NHẮN NHỦ TỪ MENTOR -->
+    <h2 id="mentor">👨‍🏫 17. Lời nhắn nhủ từ Mentor trước giờ thực chiến</h2>
     <div class="mentor-box callout">
-        <span class="callout-title">Kịch bản Điều phối Thực chiến tại Lab 2 (Hardware Control)</span>
-        <ul>
-            <li><strong>Đại Hình Mở Đầu (Phòng chống Cháy Nổ 5 phút):</strong> Giảng viên cầm tấm Breadboard trắng tinh giơ lên cao. Chỉ tay vẽ đường thẳng theo 2 rãnh điện Xanh/Đỏ dọc mép: <em>"Hai rãnh này là sông cái, chảy từ đầu đến cuối board"</em>. Chỉ vào các khe ở giữa: <em>"Các khe này là sông nhánh, chỉ thông mạch theo chiều ngang ngắn"</em>. <strong>Ban bố Sắc lệnh Tử hình:</strong> <em>"Các em bẻ 2 cái chân của 1 con điện trở cắm vào chung 1 hàng ngang là vô não, nó tự đoản mạch chính nó. Nghiêm trọng hơn, em nào lấy cọng dây đỏ cắm thẳng qua lỗ rãnh xanh, cắm điện vào là nổ cháy cổng USB máy tính lập tức!"</em>. Sự đe dọa này giúp sinh viên tỉnh táo 100%.</li>
-            <li><strong>Luật Kiểm Tra Chéo (Cross-check Policy):</strong> Để phòng chống phá hoại linh kiện, Mentor ra luật: Chia lớp thành các cặp (Pair). Sinh viên A cắm dây, Sinh viên B đóng vai trò Kỹ sư QA (Kiểm định). <strong>TUYỆT ĐỐI CẤM</strong> cắm cáp USB cấp điện nếu Sinh viên B (và Mentor) chưa đi dò lại bằng mắt đường VCC và đường GND xem có bị chập không.</li>
-            <li><strong>Gỡ rối Điểm Mù DHT11:</strong> 50% lớp sẽ gào lên vì lỗi <code>NaN</code>. Giảng viên đừng vội bắt sinh viên dán mắt vào màn hình sửa C++. Rất nhiều module DHT11 Tàu (vỏ xanh) bị lỗi nhịp Clock, hoặc sợi cáp Jumper cắm vào Breadboard bị đứt ngầm đứt lõi. Mentor hãy lận lưng sẵn 2-3 củ DHT11 loại tốt (hoặc DHT22), đi đến bàn sinh viên rút cụm cũ ra cắm nguyên cụm xịn của thầy vào để chẩn đoán phân biệt: Bệnh do Phần mềm (Code) hay Bệnh do Sinh lý (Linh kiện tã).</li>
-            <li><strong>Bảo vệ Tư duy (Chống Cheat Code):</strong> Khi sinh viên reo lên "Thầy ơi mạch nút bấm của em bật đèn được rồi". Hãy tiến lại, chỉ tay vào code và hỏi: <em>"Biến <code>oldSwitchState</code> làm nhiệm vụ gì? Giờ thầy xóa nó đi, chỉ để lại cái hàm if (switchState == HIGH) thôi thì điều khiển có được không?"</em>. Sinh viên nào ú ớ không trả lời được, bắt sinh viên gập máy lại, xóa code đi tự gõ lại bằng tay, cấm copy-paste.</li>
+        <span class="callout-title">Ghi nhớ những nguyên tắc "sinh tồn" này tại Phòng Lab:</span>
+        <ul style="margin-top: 10px;">
+            <li><strong>Kỷ luật Cháy Nổ là số 1:</strong> Breadboard không phải là món đồ chơi. Bẻ gập 2 chân một linh kiện cắm chung vào 1 rãnh ngang là tự đoản mạch. Vô tình để dây Đỏ (VCC) chạm vào dây Đen (GND) sẽ làm chập cháy mạch hoặc nổ cổng USB của máy tính ngay lập tức. Hãy cắm dây bằng sự tập trung cao độ!</li>
+            <li><strong>Nguyên tắc Kiểm Tra Chéo (Cross-check QA):</strong> Khuyến khích làm việc theo nhóm (Pair Engineering). Một bạn cắm mạch thì bạn kia phải làm "Kỹ sư kiểm định" (QA). <strong>TUYỆT ĐỐI CẤM</strong> hành vi cắm cáp USB cấp điện nếu bạn QA chưa rà soát lại bằng mắt xem đường Nguồn và Mass có bị chập hay không.</li>
+            <li><strong>Đừng vội đổ lỗi cho Code (Quy tắc Cô lập Sự cố):</strong> Khi màn hình hiện lỗi <code>NaN</code>, đừng vội dán mắt vào IDE sửa C++. Rất có thể cáp Jumper của bạn bị đứt ngầm lõi đồng, hoặc module DHT11 bị lỏng. Kỹ năng quan trọng nhất của Kỹ sư là biết mượn cụm cảm biến của nhóm bên cạnh cắm sang để test chéo (Isolation Test). Phải biết phân biệt rạch ròi lỗi do Software hay do Hardware.</li>
+            <li><strong>Sẵn sàng bảo vệ Tư duy:</strong> Trong giờ Lab, Mentor có thể tiến đến bàn bạn, thử xóa dòng <code>oldSwitchState = switchState;</code> và yêu cầu bạn giải thích tại sao mạch lại chớp đèn loạn xạ. Nếu bạn chỉ Copy-Paste mà không hiểu tốc độ CPU quét hàng triệu vòng/giây khác với cái bấm tay 0.1s của con người thế nào, bạn sẽ bị yêu cầu làm lại bài. Hãy code bằng tư duy, đừng code bằng ngón tay!</li>
         </ul>
+    </div>
+
+    <!-- FOOTER BẢN QUYỀN TRƯỜNG -->
+    <div class="footer">
+        <p class="highlight">Bản quyền nội dung thuộc về Khoa Điện - Điện Tử, Trường Kỹ Thuật Phenikaa, Đại Học Phenikaa.</p>
+        <p>Giảng viên biên soạn & Thiết kế kỹ thuật: <strong>ThS. Đinh Văn Nam</strong></p>
+        <p style="font-size: 0.8em; margin-top: 15px; opacity: 0.8;">Tài liệu lưu hành nội bộ phục vụ đào tạo hệ sinh thái Embedded/IoT.</p>
     </div>
 
 </div>
